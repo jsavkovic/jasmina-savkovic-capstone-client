@@ -1,0 +1,72 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.header {
+    background-color: $dark-blue;
+    height: 8.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__main {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        color: $alternate-light-grey;
+        font-size: 40px;
+    }
+
+    &__profile-link {
+        
+    }
+
+    &__profile-image {
+        height: 3.125rem;
+        color: $alternate-light-grey;
+    }
+
+    &__secondary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__search {
+        border-radius: 3.125rem;
+        width: 70%;
+        padding: 0.5rem;
+        position: relative;
+    }
+
+    &__search-icon {
+        position: absolute;
+        top: 5.7rem;
+        left: 14.3rem;
+    }
+
+    &__search-button {
+        border-radius: 3.125rem;
+        padding: 0.4rem;
+        background-color: $dark-pink;
+        color: $alternate-light-grey;
+        // position: absolute;
+        // top: 5.5rem;
+        // left: 13.7rem;
+        border: 1px solid $dark-blue;
+        font-size: 12px;
+        width: 25%;
+    }
+
+    // &__filter {
+    //     width: 25%;
+    // }
+
+    // &__filter-button {
+    //     padding: 0.5rem;
+    //     border-radius: 3.125rem;
+    //     width: 100%;
+    // }
+}
