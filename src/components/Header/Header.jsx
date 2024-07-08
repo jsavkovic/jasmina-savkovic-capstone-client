@@ -1,5 +1,4 @@
 import './Header.scss'
-// import searchIcon from '../../assets/icons/search.svg'
 import userIcon from '../../assets/icons/user.svg'
 
 import React from 'react';
@@ -15,12 +14,7 @@ const Header = () => {
             </div>
             <div className="header__secondary">
                 <input type="text" placeholder="Search..." className="header__search" />
-                {/* <img className="header__search-icon" src={searchIcon} alt="search icon" /> */}
                 <button className="header__search-button">FIND</button>
-                {/*  <div className="header__filter">
-                    <button className="header__filter-button">Filter ▾</button>
-                    Add dropdown content here
-                </div> */}
             </div>
         </header>
     );

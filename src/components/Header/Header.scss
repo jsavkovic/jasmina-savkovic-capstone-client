@@ -38,23 +38,13 @@
         border-radius: 3.125rem;
         width: 70%;
         padding: 0.5rem;
-        // position: relative;
     }
-
-    // &__search-icon {
-    //     position: absolute;
-    //     top: .5rem;
-    //     right: 15rem;
-    // }
 
     &__search-button {
         border-radius: 3.125rem;
         padding: 0.5rem;
         background-color: $light-pink;
         color: $dark-blue;
-        // position: absolute;
-        // top: 5.5rem;
-        // left: 13.7rem;
         border: 1px solid $dark-blue;
         font-size: 0.8rem;
         width: 25%;
@@ -63,14 +53,4 @@
         box-shadow: 0 4px 6px rgba(244, 225, 225, 0.1); 
 
     }
-
-    // &__filter {
-    //     width: 25%;
-    // }
-
-    // &__filter-button {
-    //     padding: 0.5rem;
-    //     border-radius: 3.125rem;
-    //     width: 100%;
-    // }
 }

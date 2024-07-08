@@ -18,7 +18,7 @@ const ItemsList = ({ userId, category }) => {
             try {
                 console.log(`Fetching from URL: ${API_URL}/items/${userId}/${category}`);
                 const response = await axios.get(`${API_URL}/items/${userId}/${category}`);
-                console.log('API Response:', response); // Log the full response
+                console.log('API Response:', response);
 
                 if (response.status === 204) {
                     setError('No items found');
@@ -26,7 +26,7 @@ const ItemsList = ({ userId, category }) => {
                     setItems(response.data);
                 }
             } catch (err) {
-                console.error('Error fetching items:', err.message, err.stack); // Log detailed error
+                console.error('Error fetching items:', err.message, err.stack);
                 setError('Failed to fetch items');
             }
         };
