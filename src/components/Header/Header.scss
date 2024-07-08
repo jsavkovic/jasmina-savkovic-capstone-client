@@ -38,26 +38,30 @@
         border-radius: 3.125rem;
         width: 70%;
         padding: 0.5rem;
-        position: relative;
+        // position: relative;
     }
 
-    &__search-icon {
-        position: absolute;
-        top: 5.7rem;
-        left: 14.3rem;
-    }
+    // &__search-icon {
+    //     position: absolute;
+    //     top: .5rem;
+    //     right: 15rem;
+    // }
 
     &__search-button {
         border-radius: 3.125rem;
-        padding: 0.4rem;
-        background-color: $dark-pink;
-        color: $alternate-light-grey;
+        padding: 0.5rem;
+        background-color: $light-pink;
+        color: $dark-blue;
         // position: absolute;
         // top: 5.5rem;
         // left: 13.7rem;
         border: 1px solid $dark-blue;
-        font-size: 12px;
+        font-size: 0.8rem;
         width: 25%;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(244, 225, 225, 0.1); 
+
     }
 
     // &__filter {

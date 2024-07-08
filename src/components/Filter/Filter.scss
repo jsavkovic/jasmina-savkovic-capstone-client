@@ -1,0 +1,18 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.filter {
+        width: 25%;
+    
+    &__button {
+        padding: 0.5rem;
+        border-radius: 3.125rem;
+        width: 100%;
+        background-color: white;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 12px rgba(0, 0, 0, 0.1); 
+        color: $dark-blue;
+        font-weight: 600;
+        cursor: pointer;
+    }
+}
