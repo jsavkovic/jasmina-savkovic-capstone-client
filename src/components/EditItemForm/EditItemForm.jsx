@@ -27,9 +27,10 @@ const EditItemForm = () => {
     const [formValues, setFormValues] = useState({
         name: '',
         description: '',
-        category: '',
-        status: '',
-        image: ''
+        type_id: '',
+        status_id: '',
+        image: null,
+        existingImage: ''
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -42,9 +43,10 @@ const EditItemForm = () => {
                 setFormValues({
                     name: item.name,
                     description: item.description,
-                    category: item.category,
-                    status: item.status,
-                    image: item.image
+                    type_id: item.type_id,
+                    status_id: item.status_id,
+                    image: null,
+                    existingImage: item.image
                 });
                 setIsLoading(false);
             } catch (error) {
@@ -70,15 +72,19 @@ const EditItemForm = () => {
         const newErrors = {};
         if (!formValues.name) newErrors.name = 'Name is required';
         if (!formValues.description) newErrors.description = 'Description is required';
-        if (!formValues.category) newErrors.category = 'Category is required';
-        if (!formValues.status) newErrors.status = 'Status is required';
+        if (!formValues.type_id) newErrors.type_id = 'Category is required';
+        if (!formValues.status_id) newErrors.status_id = 'Status is required';
         return newErrors;
     };
 
     const submitData = async (data, url, method) => {
         const formData = new FormData();
         for (const key in data) {
-            formData.append(key, data[key]);
+            if (key === 'image' && data[key] instanceof File) {
+                formData.append(key, data[key]);
+            } else {
+                formData.append(key, data[key]);
+            }
         }
 
         try {
@@ -120,7 +126,6 @@ const EditItemForm = () => {
         <section className='edit-item'>
             <div className='edit-item__icons'>
                 <BackButton />
-                {/* Add close button */}
             </div>
             <form className='edit-item__form' onSubmit={handleSubmit}>
                 <h1 className='edit-item__title'>Edit Item</h1>
@@ -133,7 +138,7 @@ const EditItemForm = () => {
                         value={formValues.name}
                         onChange={handleInputChange}
                     />
-                    {errors.name && <p className='edit-item__error'>{errors.name}</p>}
+                    {errors.name && <p className='error-text'>{errors.name}</p>}
                 </div>
                 <div className='edit-item__field'>
                     <label htmlFor='description'>Description</label>
@@ -143,46 +148,48 @@ const EditItemForm = () => {
                         value={formValues.description}
                         onChange={handleInputChange}
                     />
-                    {errors.description && <p className='edit-item__error'>{errors.description}</p>}
+                    {errors.description && <p className='error-text'>{errors.description}</p>}
                 </div>
                 <div className='edit-item__field'>
-                    <label htmlFor='category'>Category</label>
+                    <label htmlFor='type_id'>Category</label>
                     <select
-                        id='category'
-                        name='category'
-                        value={formValues.category}
+                        id='type_id'
+                        name='type_id'
+                        value={formValues.type_id}
                         onChange={handleInputChange}
                     >
                         <option value=''>Select Category</option>
                         {categoryOptions.map((option) => (
-                            <option key={option.id} value={option.type}>
+                            <option key={option.id} value={option.id}>
                                 {option.type}
                             </option>
                         ))}
                     </select>
-                    {errors.category && <p className='edit-item__error'>{errors.category}</p>}
+                    {errors.type_id && <p className='error-text'>{errors.type_id}</p>}
                 </div>
                 <div className='edit-item__field'>
-                    <label htmlFor='status'>Status</label>
+                    <label htmlFor='status_id'>Status</label>
                     <select
-                        id='status'
-                        name='status'
-                        value={formValues.status}
+                        id='status_id'
+                        name='status_id'
+                        value={formValues.status_id}
                         onChange={handleInputChange}
                     >
                         <option value=''>Select Status</option>
-                        <option value='Listed'>Listed</option>
-                        <option value='Inactive'>Inactive</option>
+                        <option value='1'>Listed</option>
+                        <option value='2'>Inactive</option>
                     </select>
-                    {errors.status && <p className='edit-item__error'>{errors.status}</p>}
+                    {errors.status_id && <p className='error-text'>{errors.status_id}</p>}
                 </div>
                 <div className='edit-item__field'>
-                    <label htmlFor='existingImage'>Existing Image</label>
-                    <img
-                        src={`${API_URL}/uploads/${formValues.existingImage}`}
-                        alt='Current'
-                        className='edit-item__existing-image'
-                    />
+                    <label htmlFor='existingImage'>Image</label>
+                    {formValues.existingImage && (
+                        <img
+                            src={`${API_URL}/uploads/${formValues.existingImage}`}
+                            alt='Current'
+                            className='edit-item__existing-image'
+                        />
+                    )}
                 </div>
                 <div className='edit-item__field'>
                     <label htmlFor='image'>Replace Image</label>

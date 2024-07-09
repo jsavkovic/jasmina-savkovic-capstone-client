@@ -34,12 +34,16 @@
     &__field {
         margin-bottom: 1rem;
 
-        label {
+        & img {
+            width: 50%;
+        }
+
+        & label {
             display: block;
             margin-bottom: 0.5rem;
         }
 
-        input,
+        & input,
         textarea,
         select {
             width: 100%;
@@ -49,7 +53,7 @@
         }
 
         .error-text {
-            color: red;
+            color: $error;
             margin-top: 0.5rem;
         }
     }

@@ -20,7 +20,7 @@ const ItemDetails = ({ item }) => {
         const newStatus = newStatusId === 1 ? 'Listed' : 'Inactive';
 
         try {
-            await axios.put(`${API_URL}/items/${item.id}`, { status_id: newStatusId });
+            await axios.put(`${API_URL}/items/${item.id}/status`, { status_id: newStatusId });
             setItemStatus(newStatus);
             item.status_id = newStatusId;
             setIsUpdating(false);
