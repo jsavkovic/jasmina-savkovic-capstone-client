@@ -1,9 +1,11 @@
-
+import Header from '../components/Header/Header';
+import EditItemForm from '../components/EditItemForm/EditItemForm';
 
 const EditPage = () => {
     return (
         <div>
-            EDIT page
+            <Header />
+            <EditItemForm />
         </div>
     );
 };
