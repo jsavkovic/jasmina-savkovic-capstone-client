@@ -8,11 +8,8 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 1rem 0.5rem;
-    // border: 2px solid $soft-plum;
     border-radius: .625rem;
-    margin:1rem;
-    // min-height: 100%;
- 
+    margin: 1rem;
 
     &__item {
         width: 30%;
@@ -28,7 +25,17 @@
         overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
         background-color: white;
-        
+
+        a {
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         &::after {
             content: 'See item details';
             position: absolute;
@@ -37,15 +44,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
             width: 100%;
             height: 100%;
             opacity: 0;
-            background-color: #f9ecefef; 
+            background-color: #f9f2f4f5; 
             color: $dark-blue;
             font-size: 1rem;
             font-weight: 600;
             text-align: center;
+            pointer-events: none;
             transition: opacity 200ms ease;
         }
 
@@ -54,22 +61,16 @@
         }
 
         &:hover {
-            border: 3px solid $light-green;
-            transform: translateY(-3px); 
+            border: 2px solid $light-green;
+            transform: translateY(-2px); 
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 12px 18px rgba(0, 0, 0, 0.15);
             cursor: pointer;
-
-            &__overlay {
-                opacity: 1;
         }
-        
     }
 
-}
-
-&__title {
-    padding: 0.5rem;
-}
+    &__title {
+        padding: 0.5rem;
+    }
 
     &__image {
         width: 100%;

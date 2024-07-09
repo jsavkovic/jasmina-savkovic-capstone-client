@@ -1,6 +1,7 @@
 import './ItemsList.scss'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const ItemsList = ({ userId }) => {
     const [items, setItems] = useState([]);
@@ -39,8 +40,10 @@ const ItemsList = ({ userId }) => {
             {error && <p className="error">{error}</p>}
             {items.map(item => (
                 <article key={item.id} className="items-list__item">
-                    <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="items-list__image" />
-                    <h3 className='items-list__title'>{item.name}</h3>
+                    <Link to={`/items/${item.id}`}>
+                        <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="items-list__image" />
+                        <h3 className='items-list__title'>{item.name}</h3>
+                    </Link>
                 </article>
             ))}
         </section>

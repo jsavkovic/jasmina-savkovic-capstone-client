@@ -10,8 +10,7 @@
     align-items: center;
     padding: 1rem 0.5rem;
     border-radius: .625rem;
-    margin:1rem;
-    // border: 2px solid $soft-plum;
+    margin: 1rem;
     background-color: white;
 
     &__header {
@@ -28,12 +27,10 @@
             align-items: center;
             padding: 2rem;
         }
-
     }
 
     &__title {
         font-size: 2rem;
-        // margin-bottom: 1rem;
     }
 
     &__button {
@@ -42,11 +39,11 @@
         width: 80%;
         background-color: white;
         border: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 12px rgba(0, 0, 0, 0.1); 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 12px rgba(0, 0, 0, 0.1);
         color: $dark-blue;
         font-weight: 600;
         cursor: pointer;
-        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.3s ease, color 0.3s ease;
         margin: 1rem;
 
         @include tablet {
@@ -58,28 +55,26 @@
         &:hover {
             background-color: $alternate-light-grey;
         }
-    
+
         &:active {
             transform: translateY(2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-    
-        // &:disabled {
-        //     cursor: not-allowed;
-        //     opacity: 0.5;
-        // }
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
     }
 
     &__image {
         width: 80%;
         height: auto;
         border: 2px solid $light-pink;
-        // margin:auto;
         border-radius: .625rem;
         max-width: 31.25rem;
     }
 
-    
     &__description {
         padding: 2rem;
         max-width: 31.25rem;
@@ -106,15 +101,9 @@
         }
     }
 
-    &__category {
+    &__category {}
 
-    }
-
-    &__owner {
-        // font-weight: 600;
-        // font-family: cursive;
-        // font-size: 1.3rem;
-    }
+    &__owner {}
 
     &__status {
         width: 100%;
@@ -124,10 +113,10 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease, box-shadow 0.1s ease;
 
         &--green {
             background-color: $light-green;
-            // color: white;
         }
 
         &--grey {
