@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import BackButton from '../BackButton/BackButton';
+import CancelButton from '../CancelButton/CancelButton'
 import './EditItemForm.scss';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -34,6 +35,7 @@ const EditItemForm = () => {
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
         const fetchItemData = async () => {
@@ -65,8 +67,13 @@ const EditItemForm = () => {
     };
 
     const handleFileChange = (e) => {
-        setFormValues({ ...formValues, image: e.target.files[0] });
+        const file = e.target.files[0];
+        setFormValues({ ...formValues, image: file });
+
+        const imageUrl = URL.createObjectURL(file);
+        setImagePreview(imageUrl);
     };
+
 
     const validateForm = () => {
         const newErrors = {};
@@ -77,21 +84,14 @@ const EditItemForm = () => {
         return newErrors;
     };
 
-    const submitData = async (data, url, method) => {
+    const submitData = async (data, url) => {
         const formData = new FormData();
         for (const key in data) {
-            if (key === 'image' && data[key] instanceof File) {
-                formData.append(key, data[key]);
-            } else {
-                formData.append(key, data[key]);
-            }
+            formData.append(key, data[key])
         }
 
         try {
-            await axios({
-                method,
-                url,
-                data: formData,
+            await axios.put(url, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -109,13 +109,12 @@ const EditItemForm = () => {
             setErrors(newErrors);
         } else {
             const url = `${API_URL}/items/${itemId}`;
-            const method = 'put';
             try {
-                await submitData(formValues, url, method);
+                await submitData(formValues, url);
                 navigate(`/items/${itemId}`);
                 window.scrollTo(0, 0);
-            } catch (error) {
-                console.error('Error updating item:', error);
+            } catch (err) {
+                console.error('Error updating item:', err);
             }
         }
     };
@@ -125,7 +124,7 @@ const EditItemForm = () => {
     return (
         <section className='edit-item'>
             <div className='edit-item__icons'>
-                <BackButton />
+                <BackButton to={-1} />
             </div>
             <form className='edit-item__form' onSubmit={handleSubmit}>
                 <h1 className='edit-item__title'>Edit Item</h1>
@@ -183,13 +182,13 @@ const EditItemForm = () => {
                 </div>
                 <div className='edit-item__field'>
                     <label htmlFor='existingImage'>Image</label>
-                    {formValues.existingImage && (
-                        <img
-                            src={`${API_URL}/uploads/${formValues.existingImage}`}
-                            alt='Current'
-                            className='edit-item__existing-image'
-                        />
-                    )}
+
+                    {imagePreview ? (
+                        <img src={imagePreview} alt='New image' className='edit-item__existing-image' />
+                    ) : (
+                        formValues.existingImage && (
+                            <img src={`${API_URL}/uploads/${formValues.existingImage}`} alt='Current image' className='edit-item__existing-image' />
+                        ))}
                 </div>
                 <div className='edit-item__field'>
                     <label htmlFor='image'>Replace Image</label>
@@ -202,7 +201,10 @@ const EditItemForm = () => {
                     />
                     {errors.image && <p className='error-text'>{errors.image}</p>}
                 </div>
-                <button type='submit' className='edit-item__button'>Save Changes</button>
+                <div className='edit-item__buttons-section'>
+                    <CancelButton />
+                    <button type='submit' className='edit-item__button'>SAVE</button>
+                </div>
             </form>
         </section>
     );

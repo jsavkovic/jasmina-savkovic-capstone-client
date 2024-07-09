@@ -34,7 +34,7 @@ const ItemDetails = ({ item }) => {
     return (
         <section className='item-details'>
             <div className='item-details__icons'>
-                <BackButton />
+                <BackButton to={`/users/${item.user_id}/items`} />
                 <div className='item-details__icons--right'>
                     <EditButton to={`/items/${item.id}/edit`} />
                     <DeleteButton to={`/items/${item.id}/delete`} />

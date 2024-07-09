@@ -5,8 +5,12 @@ import { useNavigate } from 'react-router-dom';
 const EditButton = ({ to }) => {
     const navigate = useNavigate();
 
+    const handleClick = () => {
+        navigate(to);
+    };
+
     return (
-        <button className='edit-button' onClick={() => navigate(to)}>
+        <button className='edit-button' onClick={handleClick}>
             <img src={editIcon} alt='Edit' className='edit-button__icon' />
         </button>
     );

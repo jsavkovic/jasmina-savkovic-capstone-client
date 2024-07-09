@@ -5,8 +5,12 @@ import { useNavigate } from 'react-router-dom';
 const DeleteButton = ({ to }) => {
     const navigate = useNavigate();
 
+    const handleClick = () => {
+        navigate(to);
+    };
+
     return (
-        <button className='delete-button' onClick={() => navigate(to)}>
+        <button className='delete-button' onClick={handleClick}>
             <img src={deleteIcon} alt='Delete' className='delete-button__icon' />
         </button>
     );
