@@ -1,7 +1,10 @@
 import './ItemDetails.scss';
 import { useState } from 'react';
 import axios from 'axios';
-// import { API_URL } from './config.js';
+import { Link } from 'react-router-dom';
+import BackButton from '../BackButton/BackButton'
+import EditButton from '../EditButton/EditButton'
+import DeleteButton from '../DeleteButton/DeleteButton'
 
 const ItemDetails = ({ item }) => {
     const [itemStatus, setItemStatus] = useState(item.status);
@@ -13,7 +16,7 @@ const ItemDetails = ({ item }) => {
     }
 
     const toggleStatus = async () => {
-        const newStatusId = item.status_id === 1 ? 2 : 1; // Assuming 1 is listed and 2 is inactive
+        const newStatusId = item.status_id === 1 ? 2 : 1;
         const newStatus = newStatusId === 1 ? 'Listed' : 'Inactive';
 
         try {
@@ -30,6 +33,13 @@ const ItemDetails = ({ item }) => {
 
     return (
         <section className='item-details'>
+            <div className='item-details__icons'>
+                <BackButton />
+                <div className='item-details__icons--right'>
+                    <EditButton to={`/items/${item.id}/edit`} />
+                    <DeleteButton to={`/items/${item.id}/delete`} />
+                </div>
+            </div>
             <div className='item-details__header'>
                 <h1 className='item-details__title'>{item.name}</h1>
                 <button
@@ -41,11 +51,12 @@ const ItemDetails = ({ item }) => {
                 </button>
             </div>
             <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="item-details__image" />
-            {/* <h1 className='item-details__title'>{item.name}</h1> */}
             <p className='item-details__description'>{item.description}</p>
             <div className='item-details__details'>
                 <p className='item-details__category'>Category: {item.category}</p>
-                <p className='item-details__owner'>Owner: {item.owner}</p>
+                <p className='item-details__owner'>
+                    Owner: <Link to={`/users/${item.user_id}/items`}>{item.owner}</Link>
+                </p>
             </div>
             <p className={`item-details__status item-details__status--${itemStatus === 'Listed' ? 'green' : 'grey'}`}>
                 {itemStatus}

@@ -8,6 +8,8 @@ import ItemDetailsPage from './pages/ItemDetailsPage';
 import Friends from './pages/Friends'
 import FriendRequests from './pages/FriendRequests';
 import BorrowRequests from './pages/BorrowRequests';
+import EditPage from './pages/EditPage';
+import UploadPage from './pages/UploadPage';
 
 function App() {
 
@@ -18,8 +20,10 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/users/:userId/items' element={<ItemsPage />} />
+        <Route path='/users/:userId/upload' element={<UploadPage />} />
 
         <Route path='/items/:itemId' element={<ItemDetailsPage />} />
+        <Route path='/items/:itemId/edit' element={<EditPage />} />
 
         <Route path='/friends' element={<Friends />} />
         <Route path='/friend-requests' element={<FriendRequests />} />

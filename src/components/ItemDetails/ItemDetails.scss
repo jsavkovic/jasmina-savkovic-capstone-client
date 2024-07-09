@@ -29,6 +29,25 @@
         }
     }
 
+    &__icons {
+        width: 100%;
+        display: flex;
+
+        & img {
+            margin: 0 1rem;
+        }
+
+        &--right {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+
+            & img {
+                margin: 0 1rem;
+            }
+        }
+    }
+
     &__title {
         font-size: 2rem;
     }
@@ -103,7 +122,20 @@
 
     &__category {}
 
-    &__owner {}
+    &__owner {
+
+        a{ 
+            text-decoration: none;
+            color: inherit;
+
+            &:hover {
+                // color: $light-grayish-blue;
+                text-decoration: underline;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+                // font-size: 1.005rem;
+            }
+        }
+    }
 
     &__status {
         width: 100%;
