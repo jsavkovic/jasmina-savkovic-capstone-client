@@ -1,0 +1,9 @@
+@use "../styles/partials/variables" as *;
+@use "../styles/partials/mixins" as *;
+
+.items__header {
+display: flex;
+justify-content: space-between;
+padding: 1rem;
+color: $dark-blue;
+}

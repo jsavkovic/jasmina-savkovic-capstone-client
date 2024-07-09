@@ -2,10 +2,16 @@
 @use "../../styles/partials/mixins" as *;
 
 .items-list {
-    background-color: $alternate-light-grey;
+    background-color: white;
+    color: $dark-blue;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    padding: 1rem 0.5rem;
+    // border: 2px solid $soft-plum;
+    border-radius: .625rem;
+    margin:1rem;
+    // min-height: 100%;
  
 
     &__item {
@@ -59,6 +65,10 @@
         
     }
 
+}
+
+&__title {
+    padding: 0.5rem;
 }
 
     &__image {
