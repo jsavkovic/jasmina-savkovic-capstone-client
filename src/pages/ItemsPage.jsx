@@ -14,15 +14,14 @@ const ItemsPage = () => {
     useEffect(() => {
         const fetchUserName = async () => {
             try {
-                console.log(`Fetching user name from URL: ${API_URL}/user/${userId}/items`);
-                const response = await axios.get(`${API_URL}/user/${userId}/items`);
-                const items = response.data;
+                console.log(`Fetching user name from URL: ${API_URL}/user/${userId}`);
+                const response = await axios.get(`${API_URL}/user/${userId}`);
+                const user = response.data;
 
-                if (items.length > 0) {
-                    const firstItem = items[0];
-                    setUserName(firstItem.owner);
+                if (user) {
+                    setUserName(user.first_name);
                 } else {
-                    setUserName('No Items Found');
+                    setUserName('User not found');
                 }
             } catch (err) {
                 console.error('Error fetching user name:', err);
