@@ -11,7 +11,7 @@ const Header = () => {
         <header className="header">
             <div className="header__main">
                 <Link to={`/users/${userId}/items`} className='header__title--link'>
-                    <p className="header__title">Lendaroo</p>
+                    <p className="header__title">lendaroo</p>
                 </Link>
                 <div className="header__profile-link">
                     <Link to={`/users/${userId}/profile`}>

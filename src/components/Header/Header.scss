@@ -3,11 +3,12 @@
 
 .header {
     background-color: $dark-blue;
-    height: 8.5rem;
+    height: 10rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: space-between;
 
     &__main {
         display: flex;

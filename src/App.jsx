@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ItemsPage from './pages/ItemsPage';
 import Register from './pages/Register'
 import Login from './pages/Login'
-import Profile from './pages/Profile'
+import ProfilePage from './pages/ProfilePage'
 import ItemDetailsPage from './pages/ItemDetailsPage';
 import Friends from './pages/Friends'
 import FriendRequests from './pages/FriendRequests';
@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        <Route path='users/:userId/profile' element={<Profile />} />
+        <Route path='users/:userId/profile' element={<ProfilePage />} />
         <Route path='/users/:userId/items' element={<ItemsPage />} />
         <Route path='/users/:userId/upload' element={<UploadPage />} />
 

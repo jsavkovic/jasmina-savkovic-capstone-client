@@ -1,0 +1,121 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    // height: 56rem;
+    // background-color: $alternate-light-grey;
+    color: $dark-blue;
+    margin: 1rem;
+    border-radius: .625rem;
+    // border: 1px solid $light-pink;
+
+&__top {
+    // background-color: $dark-blue;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    // height: 18rem;
+    position: relative;
+    padding-bottom: 3rem;
+    
+}
+
+&__header {
+    display: flex;
+    // flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+    &__title {
+        padding: 0 1rem;
+    }
+
+&__edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 300px;
+}
+
+    &__avatar {
+        height: 8rem;
+        width: 8rem;
+        border: 1px solid $dark-blue;
+        background-color: $light-pink;
+        border-radius: 50%;
+    }
+
+    &__subtitle {
+padding: .5rem;
+    }
+
+    &__email {
+        // color: $alternate-light-grey;
+    }
+
+    &__nav {
+        background-color: $dark-blue;
+        height: 5rem;
+        width: 100%;
+        border-radius: .625rem;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    &__icons {
+        height: 2.5rem;
+        cursor: pointer;
+    }
+
+    &__requests {
+        height: 3rem;
+        width: 80%;
+        background-color: $dark-blue;
+        margin: 2rem;
+        border-radius: 3.125rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    &__borrow {
+        height: 2rem;
+        width: 45%;
+        border-radius: 3.125rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $light-pink;
+    }
+
+    &__friend {
+        height: 2rem;
+        width: 45%;
+        border-radius: 3.125rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $light-pink;
+    }
+
+    &__history {
+        border: 1px solid $dark-blue;
+        height: 23rem;
+        width: 100%;
+        border-radius: .625rem;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        // justify-content: flex-start;
+        // align-items: center;
+    }
+}
