@@ -10,6 +10,8 @@
     padding: 1rem;
     border-radius: .625rem;
     margin: 1rem;
+    max-height: 50rem;
+    overflow: scroll;
 
     &__item {
         width: 30%;

@@ -1,4 +1,5 @@
 import Header from "../components/Header/Header";
+import Footer from '../components/Footer/Footer';
 import ItemDetails from '../components/ItemDetails/ItemDetails';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -37,6 +38,7 @@ const ItemDetailsPage = () => {
         <main>
             <Header />
             <ItemDetails item={item} />
+            <Footer />
         </main>
     );
 };

@@ -1,12 +1,14 @@
 import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
 import EditItemForm from '../components/EditItemForm/EditItemForm';
 
 const EditPage = () => {
     return (
-        <div>
+        <main>
             <Header />
             <EditItemForm />
-        </div>
+            <Footer />
+        </main>
     );
 };
 

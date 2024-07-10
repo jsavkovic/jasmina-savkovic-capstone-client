@@ -11,6 +11,7 @@
     padding: 1rem 0.5rem;
     border-radius: .625rem;
     background-color: white;
+    max-height: 52rem;
 
     &__icons {
         width: 100%;
@@ -35,7 +36,7 @@
         margin-bottom: 1rem;
 
         & img {
-            width: 50%;
+            width: 40%;
         }
 
         & label {

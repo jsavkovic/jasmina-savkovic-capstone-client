@@ -171,7 +171,7 @@ const UploadItemForm = () => {
                 </div>
                 <div className='upload-item__buttons-section'>
                     <CancelButton />
-                    <button type='submit' className='upload-item__button'>Upload</button>
+                    <button type='submit' className='upload-item__button'>SAVE</button>
                 </div>
             </form>
         </section>

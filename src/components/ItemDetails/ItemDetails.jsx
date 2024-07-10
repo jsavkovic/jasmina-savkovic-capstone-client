@@ -42,13 +42,6 @@ const ItemDetails = ({ item }) => {
             </div>
             <div className='item-details__header'>
                 <h1 className='item-details__title'>{item.name}</h1>
-                <button
-                    onClick={toggleStatus}
-                    disabled={isUpdating}
-                    className='item-details__button'
-                >
-                    {itemStatus === 'Listed' ? 'Archive Item' : 'List Item'}
-                </button>
             </div>
             <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="item-details__image" />
             <p className='item-details__description'>{item.description}</p>
@@ -58,9 +51,18 @@ const ItemDetails = ({ item }) => {
                     Owner: <Link to={`/users/${item.user_id}/items`}>{item.owner}</Link>
                 </p>
             </div>
-            <p className={`item-details__status item-details__status--${itemStatus === 'Listed' ? 'green' : 'grey'}`}>
-                {itemStatus}
-            </p>
+            <div className='item-details__bottom'>
+                <p className={`item-details__status item-details__status--${itemStatus === 'Listed' ? 'green' : 'grey'}`}>
+                    {itemStatus}
+                </p>
+                <button
+                    onClick={toggleStatus}
+                    disabled={isUpdating}
+                    className='item-details__button'
+                >
+                    {itemStatus === 'Listed' ? 'Archive Item' : 'List Item'}
+                </button>
+            </div>
         </section>
     );
 };

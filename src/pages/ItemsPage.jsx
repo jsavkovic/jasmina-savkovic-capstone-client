@@ -4,6 +4,7 @@ import axios from 'axios';
 import ItemsList from '../components/ItemsList/ItemsList';
 import Header from '../components/Header/Header';
 import Filter from '../components/Filter/Filter';
+import Footer from '../components/Footer/Footer';
 import './ItemsPage.scss';
 
 const ItemsPage = () => {
@@ -32,14 +33,18 @@ const ItemsPage = () => {
     }, [API_URL, userId]);
 
     return (
-        <main>
+        <>
             <Header />
-            <div className='items__header'>
-                <h1>{userName ? `${userName}'s Items` : 'All Items'}</h1>
-                <Filter />
-            </div>
-            <ItemsList userId={userId} />
-        </main>
+            <main>
+
+                <div className='items__header'>
+                    <h1>{userName ? `${userName}'s Items` : 'All Items'}</h1>
+                    <Filter />
+                </div>
+                <ItemsList userId={userId} />
+            </main>
+            <Footer />
+        </>
     );
 };
 
