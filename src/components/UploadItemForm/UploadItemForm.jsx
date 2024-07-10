@@ -1,9 +1,9 @@
-import './UploadItemForm.scss'
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import BackButton from '../BackButton/BackButton';
 import CancelButton from '../CancelButton/CancelButton';
+import './UploadItemForm.scss';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -24,12 +24,14 @@ const categoryOptions = [
 
 const UploadItemForm = () => {
     const navigate = useNavigate();
+    const { userId } = useParams(); // Get userId from the URL params
     const [formValues, setFormValues] = useState({
         name: '',
         description: '',
         type_id: '',
         status_id: '',
-        image: null
+        image: null,
+        user_id: userId // Set user_id to the actual user id once auth is set up
     });
     const [errors, setErrors] = useState({});
     const [imagePreview, setImagePreview] = useState('');
@@ -60,7 +62,7 @@ const UploadItemForm = () => {
     const submitData = async (data, url) => {
         const formData = new FormData();
         for (const key in data) {
-            formData.append(key, data[key])
+            formData.append(key, data[key]);
         }
 
         try {
@@ -69,9 +71,9 @@ const UploadItemForm = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-        } catch (err) {
-            console.error('Error submitting data:', err);
-            throw err;
+        } catch (error) {
+            console.error('Error submitting data:', error);
+            throw error;
         }
     };
 
@@ -81,10 +83,11 @@ const UploadItemForm = () => {
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
-            const url = `${API_URL}/items`
+            const url = `${API_URL}/items`;
             try {
                 await submitData(formValues, url);
-                navigate('/items');
+                navigate(`/users/${userId}/items`);
+                window.scrollTo(0, 0);
             } catch (err) {
                 console.error('Error uploading item:', err);
             }
@@ -168,7 +171,7 @@ const UploadItemForm = () => {
                 </div>
                 <div className='upload-item__buttons-section'>
                     <CancelButton />
-                    <button type='submit' className='upload-item__button'>SAVE</button>
+                    <button type='submit' className='upload-item__button'>Upload</button>
                 </div>
             </form>
         </section>
