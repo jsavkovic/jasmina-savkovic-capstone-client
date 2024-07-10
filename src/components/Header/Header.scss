@@ -17,6 +17,11 @@
     &__title {
         color: $alternate-light-grey;
         font-size: 40px;
+
+        &--link {
+            text-decoration: none;
+            cursor: pointer;
+        }
     }
 
     &__profile-link {

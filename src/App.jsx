@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='users/:userId/profile' element={<Profile />} />
         <Route path='/users/:userId/items' element={<ItemsPage />} />
         <Route path='/users/:userId/upload' element={<UploadPage />} />
 

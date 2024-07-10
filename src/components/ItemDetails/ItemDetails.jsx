@@ -1,15 +1,31 @@
 import './ItemDetails.scss';
 import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BackButton from '../BackButton/BackButton'
 import EditButton from '../EditButton/EditButton'
 import DeleteButton from '../DeleteButton/DeleteButton'
+import DeleteModal from '../DeleteModal/DeleteModal';
 
-const ItemDetails = ({ item }) => {
+const ItemDetails = ({ item, refreshItems, userId }) => {
     const [itemStatus, setItemStatus] = useState(item.status);
     const [isUpdating, setIsUpdating] = useState(false);
+    const [isModalActive, setIsModalActive] = useState(false);
+    const navigate = useNavigate();
+
     const API_URL = import.meta.env.VITE_API_URL;
+
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`${API_URL}/items/${item.id}`);
+            console.log('Item deleted');
+            setIsModalActive(false);
+            refreshItems();
+            navigate(`/users/${userId}/items`);
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
 
     if (!item) {
         return <p>No item details available.</p>;
@@ -37,7 +53,13 @@ const ItemDetails = ({ item }) => {
                 <BackButton to={`/users/${item.user_id}/items`} />
                 <div className='item-details__icons--right'>
                     <EditButton to={`/items/${item.id}/edit`} />
-                    <DeleteButton to={`/items/${item.id}/delete`} />
+                    <DeleteButton onClick={() => setIsModalActive(true)} />
+                    <DeleteModal
+                        name={item.name}
+                        isActive={isModalActive}
+                        onClose={() => setIsModalActive(false)}
+                        onConfirmDelete={handleDelete}
+                    />
                 </div>
             </div>
             <div className='item-details__header'>
