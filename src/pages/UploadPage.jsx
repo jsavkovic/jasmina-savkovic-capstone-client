@@ -1,11 +1,13 @@
-
+import Header from "../components/Header/Header";
+import UploadItemForm from "../components/UploadItemForm/UploadItemForm";
 
 const UploadPage = () => {
-    return (
-        <div>
-      /* JSX goes here */
-        </div>
-    );
+  return (
+    <>
+      <Header />
+      <UploadItemForm />
+    </>
+  );
 };
 
 export default UploadPage;
