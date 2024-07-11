@@ -1,10 +1,19 @@
-import React from 'react';
+import { useUser } from '../context/UserContext';
+import Header from '../components/Header/Header';
+import BorrowRequests from '../components/BorrowRequests/BorrowRequests';
+import FriendRequests from '../components/FriendRequests/FriendRequests';
+import Footer from '../components/Footer/Footer';
 
 const Notifications = () => {
+    const { userId } = useUser();
+
     return (
-        <div>
-      /* JSX goes here */
-        </div>
+        <>
+            <Header />
+            <BorrowRequests userId={userId} />
+            <FriendRequests userId={userId} />
+            <Footer />
+        </>
     );
 };
 

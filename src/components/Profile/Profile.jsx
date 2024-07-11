@@ -6,12 +6,13 @@ import downloadIcon from '../../assets/icons/download.svg';
 import listIcon from '../../assets/icons/list.svg';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import BorrowRequests from '../../components/BorrowRequests/BorrowRequests';
 import FriendRequests from '../../components/FriendRequests/FriendRequests';
 
 
-const Profile = ({ userId }) => {
+const Profile = ({ }) => {
+    const { userId } = useParams();
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userImage, setUserImage] = useState('');
@@ -20,7 +21,7 @@ const Profile = ({ userId }) => {
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchUserData = async ({ userId }) => {
             try {
                 console.log(`Fetching user data from URL: ${API_URL}/user/${userId}`)
                 const response = await axios.get(`${API_URL}/user/${userId}`);

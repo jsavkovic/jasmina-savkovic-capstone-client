@@ -1,11 +1,12 @@
 import './Header.scss'
+import { useUser } from '../../context/UserContext';
 import userIcon from '../../assets/icons/user.svg';
 import { Link } from 'react-router-dom';
 
 import React from 'react';
 
 const Header = () => {
-    const userId = 1;
+    const { userId } = useUser();
 
     return (
         <header className="header">

@@ -1,12 +1,12 @@
 import './Footer.scss';
+import { useUser } from '../../context/UserContext';
 import notificationIcon from '../../assets/icons/notifications.svg';
 import addIcon from '../../assets/icons/add_circle.svg';
 import groupIcon from '../../assets/icons/group.svg';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
-
-    const userId = '1'; // temporary until auth is added
+    const { userId } = useUser();
 
     return (
         <footer className='footer'>

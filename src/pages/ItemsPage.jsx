@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ItemsList from '../components/ItemsList/ItemsList';
@@ -8,7 +8,7 @@ import Footer from '../components/Footer/Footer';
 import './ItemsPage.scss';
 
 const ItemsPage = () => {
-    const { userId } = useParams();
+    const { userId } = useUser();
     const [userName, setUserName] = useState('');
     const API_URL = import.meta.env.VITE_API_URL;
 
