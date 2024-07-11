@@ -32,10 +32,10 @@ function App() {
         <Route path='/items/:itemId' element={<ItemDetailsPage />} />
         <Route path='/items/:itemId/edit' element={<EditPage />} />
 
-        <Route path='/friends' element={<Friends />} />
-        <Route path='/friend-requests' element={<FriendRequests />} />
+        <Route path='/users/:userId/friends' element={<Friends />} />
+        <Route path='/users/:userId/friend-requests' element={<FriendRequests />} />
 
-        <Route path='/borrow-request' element={<BorrowRequests />} />
+        <Route path='/users/:userId/borrow-request' element={<BorrowRequests />} />
       </Routes>
     </BrowserRouter>
   )

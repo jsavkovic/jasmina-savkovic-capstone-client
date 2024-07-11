@@ -9,19 +9,17 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 
-const Profile = () => {
+const Profile = ({ userId }) => {
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userImage, setUserImage] = useState('');
     const [selectedRequest, setSelectedRequest] = useState('');
     const [notifications, setNotifications] = useState([]);
     const API_URL = import.meta.env.VITE_API_URL;
-    const userId = 1 //remove and move into try when all set up
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                // const userId = 1  replace with logged in user prop when log in is set up
                 console.log(`Fetching user data from URL: ${API_URL}/user/${userId}`)
                 const response = await axios.get(`${API_URL}/user/${userId}`);
                 const user = response.data;
@@ -46,7 +44,6 @@ const Profile = () => {
     const handleRequestClick = async (requestType) => {
         setSelectedRequest(requestType);
         try {
-            // const userId = 1;  replace with logged in user prop when log in is set up
             const endpoint = requestType === 'borrow-requests'
                 ? `${API_URL}/borrow-requests/lender/${userId}`
                 : `${API_URL}/pending/${userId}`;
