@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     // height: 56rem;
     // background-color: $alternate-light-grey;
     color: $dark-blue;
@@ -56,7 +56,7 @@
     }
 
     &__subtitle {
-padding: .5rem;
+        padding: .5rem;
     }
 
     &__email {
@@ -107,17 +107,17 @@ padding: .5rem;
     }
 }
 
-    // &__notifications {
-    //     border: 1px solid $dark-blue;
-    //     height: 23rem;
-    //     width: 100%;
-    //     border-radius: .625rem;
-    //     display: flex;
-    //     flex-direction: column;
-    //     padding: 1rem;
-    //     // justify-content: flex-start;
-    //     // align-items: center;
-    // }
+    &__notifications {
+        border: 1px solid $dark-blue;
+        height: 23rem;
+        width: 100%;
+        border-radius: .625rem;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        // justify-content: flex-start;
+        // align-items: center;
+    }
 
     // &__notification {
     //     display: flex;
