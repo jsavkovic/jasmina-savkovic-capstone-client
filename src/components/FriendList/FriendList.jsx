@@ -1,6 +1,7 @@
 import './FriendList.scss';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const FriendList = ({ userId }) => {
     const [friends, setFriends] = useState([]);
@@ -9,9 +10,9 @@ const FriendList = ({ userId }) => {
     useEffect(() => {
         const fetchFriends = async () => {
             try {
-                const response = await axios.get(`${API_URL}/friends/${userId}`);
+                const response = await axios.get(`${API_URL}/friends/${userId}/friends`);
                 setFriends(response.data);
-                console.log({ response })
+                console.log('Fetched friends:', response.data);
             } catch (err) {
                 console.error('Error fetching friends list:', err);
             }
@@ -25,15 +26,20 @@ const FriendList = ({ userId }) => {
             {friends.length > 0 ? (
                 <ul>
                     {friends.map(friend => (
-                        <li key={friend.id}>
-                            {friend.first_name} {friend.last_name}
+                        <li key={friend.id} className='friends__item'>
+                            <Link to={`/users/${friend.id}/items`} className='friends__link'>
+                                <img src={`${API_URL}/uploads/users/${friend.image}`} alt={`${friend.first_name} ${friend.last_name}`} className='friends__image' />
+                                <div className='friends__details'>
+                                    <h3 className='friends__name'>{friend.first_name} {friend.last_name}</h3>
+                                    <p className='friends__email'>{friend.email}</p>
+                                </div>
+                            </Link>
                         </li>
                     ))}
                 </ul>
             ) : (
                 <p>No friends found</p>
             )}
-
         </main>
     );
 };
