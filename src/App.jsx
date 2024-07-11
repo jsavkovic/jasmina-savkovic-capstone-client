@@ -6,13 +6,12 @@ import Login from './pages/Login'
 import ProfilePage from './pages/ProfilePage'
 import ItemDetailsPage from './pages/ItemDetailsPage';
 import Friends from './pages/Friends'
-import FriendRequests from './pages/FriendRequests';
-import BorrowRequests from './pages/BorrowRequests';
 import EditPage from './pages/EditPage';
 import UploadPage from './pages/UploadPage';
 import LentOutItems from './components/LentOutItems/LentOutItems';
 import BorrowedItems from './components/BorrowedItems/BorrowedItems';
 import ArchivedItems from './components/ArchivedItems/ArchivedItems';
+import Notifications from './pages/Notifications';
 
 function App() {
 
@@ -33,9 +32,7 @@ function App() {
         <Route path='/items/:itemId/edit' element={<EditPage />} />
 
         <Route path='/users/:userId/friends' element={<Friends />} />
-        <Route path='/users/:userId/friend-requests' element={<FriendRequests />} />
-
-        <Route path='/users/:userId/borrow-request' element={<BorrowRequests />} />
+        <Route path='/users/:userId/notifications' element={<Notifications />} />
       </Routes>
     </BrowserRouter>
   )

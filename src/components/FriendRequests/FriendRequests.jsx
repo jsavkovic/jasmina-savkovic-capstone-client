@@ -1,9 +1,9 @@
-
+import React from 'react';
 
 const FriendRequests = () => {
     return (
         <div>
-            <p>Friend Request Page</p>
+      /* JSX goes here */
         </div>
     );
 };

@@ -10,7 +10,7 @@ const FriendList = ({ userId }) => {
     useEffect(() => {
         const fetchFriends = async () => {
             try {
-                const response = await axios.get(`${API_URL}/friends/${userId}/friends`);
+                const response = await axios.get(`${API_URL}/friends/${userId}/all`);
                 setFriends(response.data);
                 console.log('Fetched friends:', response.data);
             } catch (err) {
