@@ -49,7 +49,7 @@
         height: 8rem;
         width: 8rem;
         border: 1px solid $dark-blue;
-        // background-color: $light-pink;
+        // background-color: $light-peach;
         border-radius: 50%;  
         object-fit: cover;
         object-position: 25% center;
@@ -89,27 +89,25 @@ padding: .5rem;
         align-items: center;
     }
 
-    &__borrow {
+    &__request {
+        cursor: pointer;
         height: 2rem;
         width: 45%;
         border-radius: 3.125rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: $light-pink;
-    }
+        background-color: $dark-blue;
+        color: $alternate-light-grey;
+    
 
-    &__friend {
-        height: 2rem;
-        width: 45%;
-        border-radius: 3.125rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    &--selected {
         background-color: $light-pink;
+        color: $dark-blue;
     }
+}
 
-    &__history {
+    &__notifications {
         border: 1px solid $dark-blue;
         height: 23rem;
         width: 100%;
@@ -119,5 +117,19 @@ padding: .5rem;
         padding: 1rem;
         // justify-content: flex-start;
         // align-items: center;
+    }
+
+    &__notification {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        border: 1px solid $light-pink;
+        border-radius: .625rem;
+
+flex-direction: row;
+        & img {
+            height: 5rem;
+            border: 1px solid $light-pink;
+        }
     }
 }
