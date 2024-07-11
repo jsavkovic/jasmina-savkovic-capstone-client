@@ -11,6 +11,7 @@ import axios from 'axios';
 const Profile = () => {
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
+    const [userImage, setUserImage] = useState('');
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -20,13 +21,16 @@ const Profile = () => {
                 console.log(`Fetching user data from URL: ${API_URL}/user/${userId}`)
                 const response = await axios.get(`${API_URL}/user/${userId}`);
                 const user = response.data;
+                console.log({ response })
 
                 if (user) {
                     setUserName(user.first_name);
                     setUserEmail(user.email);
+                    setUserImage(user.image);
                 } else {
                     setUserName('User not found');
                     setUserEmail('');
+                    setUserImage('');
                 }
             } catch (err) {
                 console.error('Error fetching user data:', err)
@@ -42,9 +46,10 @@ const Profile = () => {
                     <h1 className='profile__title'>Profile</h1>
                     <EditButton />
                 </div>
-                <div className='profile__avatar'></div>
-                {/* dynamically render user first name */}
-                <h2 className='profile__subtitle'>Welcome back {userName}!</h2>
+                <div className='profile__avatar'>
+                    {userImage && <img className='profile__avatar' src={`${API_URL}/uploads/users/${userImage}`} alt={`${userName}'s avatar`} />}
+                </div>
+                <h2 className='profile__subtitle'>Welcome back, {userName}!</h2>
                 <p className='profile__email'>{userEmail}</p>
             </div>
             <div className='profile__nav'>
