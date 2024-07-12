@@ -79,7 +79,7 @@
         font-weight: 600;
         font-size: 0.9rem;
         margin-bottom: 1rem;
-        
+
         @include tablet {
             flex-direction: row;
             justify-content: space-between;
@@ -90,8 +90,7 @@
     &__category {}
 
     &__owner {
-
-        a{ 
+        a {
             text-decoration: none;
             color: inherit;
 
