@@ -1,5 +1,5 @@
 import './ItemDetails.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
@@ -8,22 +8,33 @@ import EditButton from '../EditButton/EditButton'
 import DeleteButton from '../DeleteButton/DeleteButton'
 import DeleteModal from '../DeleteModal/DeleteModal';
 
-// const ItemDetails = ({ item, refreshItems, userId }) => {
 const ItemDetails = ({ item, refreshItems }) => {
     const { userId } = useUser();
     const [itemStatus, setItemStatus] = useState(item.status);
+    const [borrowRequests, setBorrowRequests] = useState([]);
     const [isUpdating, setIsUpdating] = useState(false);
     const [isModalActive, setIsModalActive] = useState(false);
-    // when user clicks on request button
-    const [isRequestPending, setIsRequestPending] = useState(false);
-    const [showDateInputs, setShowDateInputs] = useState(false);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [dateError, setDateError] = useState('');
+    const [requestError, setRequestError] = useState('');
     const navigate = useNavigate();
 
     const API_URL = import.meta.env.VITE_API_URL;
 
+    useEffect(() => {
+        const fetchBorrowRequests = async () => {
+            try {
+                const response = await axios.get(`${API_URL}/borrow-requests/item/${item.id}`);
+                setBorrowRequests(response.data);
+            } catch (err) {
+                console.error('Error fetching borrow requests:', err);
+                setRequestError('Failed to fetch borrow requests.');
+            }
+        };
+
+        fetchBorrowRequests();
+    }, [item.id, API_URL]);
 
     const handleDelete = async () => {
         try {
@@ -37,9 +48,9 @@ const ItemDetails = ({ item, refreshItems }) => {
         }
     };
 
-    if (!item) {
-        return <p>No item details available.</p>;
-    };
+    // if (!item) {
+    //     return <p>No item details available.</p>;
+    // };
 
 
     const toggleStatus = async () => {
@@ -94,9 +105,19 @@ const ItemDetails = ({ item, refreshItems }) => {
 
             await axios.post(`${API_URL}/borrow-requests`, borrowRequest);
             console.log('Borrow request created');
+            setRequestError('');
         } catch (err) {
             console.error('Error creating borrow request:', err);
+            if (err.response && err.response.data && err.response.data.error) {
+                setRequestError(err.response.data.error);
+            } else {
+                setRequestError('Failed to create borrow request.');
+            }
         }
+    };
+
+    const formatDate = (date) => {
+        return new Date(date).toLocaleDateString();
     };
 
     return (
@@ -104,46 +125,24 @@ const ItemDetails = ({ item, refreshItems }) => {
             <div className='item-details__icons'>
                 <BackButton to={`/users/${item.user_id}/items`} />
                 <div className='item-details__icons--right'>
-                    <EditButton to={`/items/${item.id}/edit`} />
-                    <DeleteButton onClick={() => setIsModalActive(true)} />
-                    <DeleteModal
-                        name={item.name}
-                        isActive={isModalActive}
-                        onClose={() => setIsModalActive(false)}
-                        onConfirmDelete={handleDelete}
-                    />
+                    {userId === item.user_id && (
+                        <>
+                            <EditButton to={`/items/${item.id}/edit`} />
+                            <DeleteButton onClick={() => setIsModalActive(true)} />
+                            <DeleteModal
+                                name={item.name}
+                                isActive={isModalActive}
+                                onClose={() => setIsModalActive(false)}
+                                onConfirmDelete={handleDelete}
+                            />
+                        </>
+                    )}
                 </div>
             </div>
             <div className='item-details__header'>
                 <h1 className='item-details__title'>{item.name}</h1>
             </div>
             <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="item-details__image" />
-            {userId !== item.user_id && (
-                <>
-                    <button onClick={() => setShowDateInputs(true)} className='item-details__button' disabled={isRequestPending}>
-                        {isRequestPending ? 'Pending request...' : 'Request'}
-                    </button>
-                    {showDateInputs && !isRequestPending && (
-                        <div className='item-details__date'>
-                            <label>Start Date:
-                                <input type='date'
-                                    value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)} />
-                            </label>
-                            <label>End Date:
-                                <input type='date'
-                                    value={endDate}
-                                    onChange={(e) => setEndDate(e.target.value)} />
-                            </label>
-                            {dateError && <p className='item-details__error'>{dateError}</p>}
-                            <button onClick={handleRequest} className='item-details__button'>
-                                Submit Request
-                            </button>
-                        </div>
-                    )}
-                </>
-
-            )}
             <p className='item-details__description'>{item.description}</p>
             <div className='item-details__details'>
                 <p className='item-details__category'>Category: {item.category}</p>
@@ -151,9 +150,60 @@ const ItemDetails = ({ item, refreshItems }) => {
                     Owner: <Link to={`/users/${item.user_id}/items`}>{item.owner}</Link>
                 </p>
             </div>
+
+            <div className='item-details__request-status'>
+                <h3>Borrow Requests</h3>
+                {borrowRequests.length > 0 ? (
+                    borrowRequests
+                        .filter(request => request.borrower_id === userId || request.lender_id === userId)
+                        .map((request) => (
+                            <div key={request.id} className='borrow-request'>
+                                <p>
+                                    <strong>Status:</strong> {request.borrow_status}
+                                </p>
+                                <p>
+                                    <strong>Borrower:</strong> {request.borrower_id === userId ? 'You' : `${request.borrower_first_name} ${request.borrower_last_name}`}
+                                </p>
+                                <p>
+                                    <strong>Start Date:</strong> {formatDate(request.start_date)}
+                                </p>
+                                <p>
+                                    <strong>End Date:</strong> {formatDate(request.end_date)}
+                                </p>
+                            </div>
+                        ))
+                ) : (
+                    <p>No borrow requests found.</p>
+                )}
+            </div>
             <div className='item-details__bottom'>
+                {userId !== item.user_id && (
+                    <div className='item-details__request'>
+                        <label>
+                            Start Date:
+                            <input
+                                type='date'
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                            />
+                        </label>
+                        <label>
+                            End Date:
+                            <input
+                                type='date'
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                        </label>
+                        {dateError && <p className='item-details__error'>{dateError}</p>}
+                        {requestError && <p className='item-details__error'>{requestError}</p>}
+                        <button onClick={handleRequest} className='item-details__button'>
+                            Submit Request
+                        </button>
+                    </div>
+                )}
                 <p className={`item-details__status item-details__status--${itemStatus === 'Listed' ? 'green' : 'grey'}`}>
-                    {itemStatus}
+                    Item status: {itemStatus}
                 </p>
                 <button
                     onClick={toggleStatus}
