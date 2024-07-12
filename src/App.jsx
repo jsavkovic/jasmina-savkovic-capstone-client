@@ -28,12 +28,9 @@ function App() {
           <Route path='/users/:userId/lent-out' element={<LentOutItems />} />
           <Route path='/users/:userId/borrowed' element={<BorrowedItems />} />
           <Route path='/users/:userId/archived' element={<ArchivedItems />} />
-
           <Route path='/users/:userId/upload' element={<UploadPage />} />
-
           <Route path='/items/:itemId' element={<ItemDetailsPage />} />
           <Route path='/items/:itemId/edit' element={<EditPage />} />
-
           <Route path='/users/:userId/friends' element={<Friends />} />
           <Route path='/users/:userId/notifications' element={<Notifications />} />
         </Routes>

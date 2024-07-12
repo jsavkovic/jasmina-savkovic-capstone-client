@@ -3,22 +3,22 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const ItemsList = ({ userId }) => {
+const ItemsList = ({ selectedUserId, loggedInUserId }) => {
     const [items, setItems] = useState([]);
     const [error, setError] = useState(null);
 
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        if (!userId) {
+        if (!selectedUserId) {
             setError('Invalid User Id');
             return;
         }
 
         const fetchItems = async () => {
             try {
-                console.log(`Fetching from URL: ${API_URL}/user/${userId}/items?status_id=1`);
-                const response = await axios.get(`${API_URL}/user/${userId}/items?status_id=1`);
+                console.log(`Fetching from URL: ${API_URL}/user/${selectedUserId}/items?status_id=1`);
+                const response = await axios.get(`${API_URL}/user/${selectedUserId}/items?status_id=1`);
                 console.log('API Response:', response);
 
                 if (response.status === 204) {
@@ -33,7 +33,7 @@ const ItemsList = ({ userId }) => {
         };
 
         fetchItems();
-    }, [API_URL, userId]);
+    }, [API_URL, selectedUserId]);
 
     return (
         <section className="items-list">

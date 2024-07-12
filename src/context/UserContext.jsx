@@ -4,7 +4,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     // hardcode userId, replace when login is completed
-    const [userId, setUserId] = useState(3);
+    const [userId, setUserId] = useState(1);
 
     return (
         <UserContext.Provider value={{ userId, setUserId }}>

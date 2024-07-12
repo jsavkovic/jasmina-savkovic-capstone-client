@@ -1,4 +1,4 @@
-import { useUser } from '../context/UserContext';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ItemsList from '../components/ItemsList/ItemsList';
@@ -6,9 +6,11 @@ import Header from '../components/Header/Header';
 import Filter from '../components/Filter/Filter';
 import Footer from '../components/Footer/Footer';
 import './ItemsPage.scss';
+import { useUser } from '../context/UserContext';
 
 const ItemsPage = () => {
-    const { userId } = useUser();
+    const { userId: selectedUserId } = useParams();
+    const { userId: loggedInUserId } = useUser();
     const [userName, setUserName] = useState('');
     const API_URL = import.meta.env.VITE_API_URL;
 
@@ -30,7 +32,7 @@ const ItemsPage = () => {
         };
 
         fetchUserName();
-    }, [API_URL, userId]);
+    }, [API_URL, selectedUserId]);
 
     return (
         <>
@@ -41,7 +43,7 @@ const ItemsPage = () => {
                     <h1>{userName ? `${userName}'s Items` : 'All Items'}</h1>
                     <Filter />
                 </div>
-                <ItemsList userId={userId} />
+                <ItemsList selectedUserId={selectedUserId} loggedInUserId={loggedInUserId} />
             </main>
             <Footer />
         </>

@@ -43,7 +43,7 @@ const ItemDetailsPage = () => {
     return (
         <main>
             <Header />
-            <ItemDetails item={item} refreshItems={refreshItems} userId={item.user_id} />
+            <ItemDetails item={item} refreshItems={refreshItems} />
             <Footer />
         </main>
     );

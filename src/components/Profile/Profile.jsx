@@ -1,18 +1,19 @@
 import './Profile.scss';
+import { useUser } from '../../context/UserContext';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
 import EditButton from '../EditButton/EditButton';
 import archiveIcon from '../../assets/icons/archive.svg';
 import uploadIcon from '../../assets/icons/upload.svg';
 import downloadIcon from '../../assets/icons/download.svg';
 import listIcon from '../../assets/icons/list.svg';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
 import BorrowRequests from '../../components/BorrowRequests/BorrowRequests';
 import FriendRequests from '../../components/FriendRequests/FriendRequests';
 
 
-const Profile = ({ }) => {
-    const { userId } = useParams();
+const Profile = () => {
+    const { userId } = useUser();
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userImage, setUserImage] = useState('');
@@ -21,7 +22,7 @@ const Profile = ({ }) => {
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        const fetchUserData = async ({ userId }) => {
+        const fetchUserData = async () => {
             try {
                 console.log(`Fetching user data from URL: ${API_URL}/user/${userId}`)
                 const response = await axios.get(`${API_URL}/user/${userId}`);
