@@ -14,9 +14,16 @@ const ItemDetails = ({ item, refreshItems }) => {
     const [itemStatus, setItemStatus] = useState(item.status);
     const [isUpdating, setIsUpdating] = useState(false);
     const [isModalActive, setIsModalActive] = useState(false);
+    // when user clicks on request button
+    const [isRequestPending, setIsRequestPending] = useState(false);
+    const [showDateInputs, setShowDateInputs] = useState(false);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [dateError, setDateError] = useState('');
     const navigate = useNavigate();
 
     const API_URL = import.meta.env.VITE_API_URL;
+
 
     const handleDelete = async () => {
         try {
@@ -32,7 +39,8 @@ const ItemDetails = ({ item, refreshItems }) => {
 
     if (!item) {
         return <p>No item details available.</p>;
-    }
+    };
+
 
     const toggleStatus = async () => {
         const newStatusId = item.status_id === 1 ? 2 : 1;
@@ -50,14 +58,37 @@ const ItemDetails = ({ item, refreshItems }) => {
         }
     };
 
+    const validateDates = () => {
+        if (!startDate || !endDate) {
+            setDateError('Both start date and end date are required.');
+            return false;
+        }
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        if (start >= end) {
+            setDateError('End date must be after start date.');
+            return false;
+        }
+
+        setDateError('');
+        return true;
+    };
+
+
     const handleRequest = async () => {
+        if (!validateDates()) {
+            return;
+        }
+
         try {
             const borrowRequest = {
                 borrower_id: userId,
                 lender_id: item.user_id,
                 item_id: item.id,
-                start_date: new Date().toISOString().split('T')[0],
-                end_date: new Date().toISOString().split('T')[0],
+                start_date: startDate,
+                end_date: endDate,
                 borrow_status_id: 1,
             };
 
@@ -88,9 +119,30 @@ const ItemDetails = ({ item, refreshItems }) => {
             </div>
             <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="item-details__image" />
             {userId !== item.user_id && (
-                <button onClick={handleRequest} className='item-details__button'>
-                    Request
-                </button>
+                <>
+                    <button onClick={() => setShowDateInputs(true)} className='item-details__button' disabled={isRequestPending}>
+                        {isRequestPending ? 'Pending request...' : 'Request'}
+                    </button>
+                    {showDateInputs && !isRequestPending && (
+                        <div className='item-details__date'>
+                            <label>Start Date:
+                                <input type='date'
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)} />
+                            </label>
+                            <label>End Date:
+                                <input type='date'
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)} />
+                            </label>
+                            {dateError && <p className='item-details__error'>{dateError}</p>}
+                            <button onClick={handleRequest} className='item-details__button'>
+                                Submit Request
+                            </button>
+                        </div>
+                    )}
+                </>
+
             )}
             <p className='item-details__description'>{item.description}</p>
             <div className='item-details__details'>
