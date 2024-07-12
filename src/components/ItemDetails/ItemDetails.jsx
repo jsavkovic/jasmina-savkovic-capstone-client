@@ -48,11 +48,6 @@ const ItemDetails = ({ item, refreshItems }) => {
         }
     };
 
-    // if (!item) {
-    //     return <p>No item details available.</p>;
-    // };
-
-
     const toggleStatus = async () => {
         const newStatusId = item.status_id === 1 ? 2 : 1;
         const newStatus = newStatusId === 1 ? 'Listed' : 'Inactive';

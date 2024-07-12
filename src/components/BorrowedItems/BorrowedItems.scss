@@ -4,6 +4,10 @@
 .borrowed-items {
     padding: 2rem;
 
+    &__title {
+        padding: 1rem 0;
+    }
+
     &__list {
         display: flex;
         flex-direction: column;

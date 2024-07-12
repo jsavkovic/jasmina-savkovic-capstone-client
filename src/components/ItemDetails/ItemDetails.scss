@@ -12,7 +12,7 @@
     border-radius: .625rem;
     margin: 1rem;
     background-color: white;
-    height: 54rem;
+    // height: 54rem;
 
     &__header {
         width: 100%;
@@ -54,7 +54,7 @@
     }
 
     &__image {
-        width: 80%;
+        width: 60%;
         height: auto;
         border: 2px solid $light-pink;
         border-radius: .625rem;

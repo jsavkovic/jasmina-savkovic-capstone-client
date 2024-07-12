@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './BorrowedItems.scss';
 import { useUser } from '../../context/UserContext';
+import BackButton from '../../components/BackButton/BackButton'
+import Filter from '../../components/Filter/Filter'
 
 const BorrowedItems = () => {
     const { userId } = useUser();
@@ -57,8 +59,12 @@ const BorrowedItems = () => {
     };
 
     return (
-        <div className='borrowed-items'>
-            <h1>Borrowed Items</h1>
+        <section className='borrowed-items'>
+            <div className='item-details__icons'>
+                <BackButton to={-1} />
+                <Filter />
+            </div>
+            <h1 className='borrowed-items__title'>Borrowed Items</h1>
             {borrowedItems.length > 0 ? (
                 <div className='borrowed-items__list'>
                     {borrowedItems.map(item => (
@@ -86,7 +92,7 @@ const BorrowedItems = () => {
             ) : (
                 <p>No borrowed items found</p>
             )}
-        </div>
+        </section>
     );
 };
 
