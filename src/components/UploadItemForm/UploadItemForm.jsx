@@ -1,5 +1,5 @@
-// import { useUser } from '../../context/UserContext';
-import React, { useState } from 'react';
+import { useUser } from '../../context/UserContext';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import BackButton from '../BackButton/BackButton';
@@ -24,7 +24,7 @@ const categoryOptions = [
 ];
 
 const UploadItemForm = () => {
-    // const { userId } = useUser();
+    const { userId } = useUser();
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState({
         name: '',
