@@ -8,7 +8,7 @@ import ItemDetailsPage from './pages/ItemDetailsPage';
 import Friends from './pages/Friends'
 import EditPage from './pages/EditPage';
 import UploadPage from './pages/UploadPage';
-import LentOutItemsPage from './pages/LentOutItemsPage';
+import LoanedItemsPage from './pages/LoanedItemsPage';
 import BorrowedItemsPage from './pages/BorrowedItemsPage';
 import ArchivedItemsPage from './pages/ArchivedItemsPage';
 import Notifications from './pages/Notifications';
@@ -30,7 +30,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='users/:userId/profile' element={<ProfilePage />} />
             <Route path='/users/:userId/items' element={<ItemsPage />} />
-            <Route path='/users/:userId/loaned' element={<LentOutItemsPage />} />
+            <Route path='/users/:userId/loaned' element={<LoanedItemsPage />} />
             <Route path='/users/:userId/borrowed' element={<BorrowedItemsPage />} />
             <Route path='/users/:userId/archived' element={<ArchivedItemsPage />} />
             <Route path='/users/:userId/upload' element={<UploadPage />} />

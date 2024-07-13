@@ -14,6 +14,7 @@ const Header = () => {
     const paths = [
         `/users/${userId}/items`,
         `/users/${userId}/borrowed`,
+        `/users/${userId}/loaned`,
         `/users/${userId}/friends`
     ];
 
@@ -55,7 +56,11 @@ const Header = () => {
                     <Tab
                         key={index}
                         className='header__tab'
-                        label={index === 0 ? "My Listings" : index === 1 ? "Borrowed Items" : "Friends"}
+                        label={
+                            index === 0 ? "My Listings" :
+                                index === 1 ? "Borrowed Items" :
+                                    index === 2 ? "Loaned Items" : "Friends"
+                        }
                         component={NavLink}
                         to={path}
                     />
