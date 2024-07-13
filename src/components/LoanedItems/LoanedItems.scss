@@ -1,0 +1,59 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.loaned-items {
+    padding: 2rem;
+
+    &__title {
+        padding: 1rem 0;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    &__image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        margin-right: 1rem;
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    &__cancel-button {
+        padding: 0.5rem 1rem;
+        background-color: $dark-blue;
+        color: #fff;
+        border: none;
+        border-radius: 3.125rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: $light-pink;
+            color: $dark-blue;
+        }
+    }
+}
