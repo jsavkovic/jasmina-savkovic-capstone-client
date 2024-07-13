@@ -3,7 +3,7 @@
 
 .header {
     background-color: $dark-blue;
-    height: 10rem;
+    // height: 10rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -40,34 +40,66 @@
         align-items: center;
     }
 
-    &__search {
-        border-radius: 3.125rem;
-        width: 70%;
-        padding: 0.5rem;
-    }
+    // &__search {
+    //     border-radius: 3.125rem;
+    //     width: 70%;
+    //     padding: 0.5rem;
+    // }
 
-    &__search-button {
-        border-radius: 3.125rem;
-        padding: 0.5rem;
-        background-color: $light-pink;
-        color: $dark-blue;
-        border: 1px solid $dark-blue;
-        font-size: 0.8rem;
-        width: 25%;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 4px 6px rgba(244, 225, 225, 0.1); 
-        transition: transform 0.1s ease, box-shadow 0.1s ease;
+    // &__search-button {
+    //     border-radius: 3.125rem;
+    //     padding: 0.5rem;
+    //     background-color: $light-pink;
+    //     color: $dark-blue;
+    //     border: 1px solid $dark-blue;
+    //     font-size: 0.8rem;
+    //     width: 25%;
+    //     font-weight: 600;
+    //     cursor: pointer;
+    //     box-shadow: 0 4px 6px rgba(244, 225, 225, 0.1); 
+    //     transition: transform 0.1s ease, box-shadow 0.1s ease;
 
-        &:hover {
-            background-color: #F4ACB7;
-        }
+    //     &:hover {
+    //         background-color: #F4ACB7;
+    //     }
     
-        &:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+        // &:active {
+        //     transform: translateY(2px);
+        //     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
+        // }
     
 
+    // }
+
+    &__tabs {
+        margin-top: 1rem;
+        width: 100%;
+
+        .MuiTabs-flexContainer {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .MuiTab-root {
+            background-color: $dark-blue;
+            color: $alternate-light-grey;
+            transition: all 0.3s ease;
+
+            &.Mui-selected {
+                color: $light-pink;
+                border-bottom: 2px solid $light-pink;
+                transition: all 0.5s ease-in-out;
+            }
+
+            &:hover {
+                background-color: lighten($dark-blue, 10%);
+            }
+        }
+
+        .MuiTabs-indicator {
+            background-color: $light-pink;
+            transition: all 0.3s ease-in-out;
+        }
     }
 }

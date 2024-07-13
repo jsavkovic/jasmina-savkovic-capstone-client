@@ -77,7 +77,7 @@ const Profile = () => {
                 <Link to={`/users/${userId}/items`}>
                     <img className='profile__icons' src={listIcon} alt='list items' />
                 </Link>
-                <Link to={`/users/${userId}/lent-out`}>
+                <Link to={`/users/${userId}/loaned`}>
                     <img className='profile__icons' src={uploadIcon} alt='lent out items' />
                 </Link>
                 <Link to={`/users/${userId}/borrowed`}>

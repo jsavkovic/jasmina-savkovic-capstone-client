@@ -13,29 +13,35 @@ import BorrowedItemsPage from './pages/BorrowedItemsPage';
 import ArchivedItemsPage from './pages/ArchivedItemsPage';
 import Notifications from './pages/Notifications';
 import { UserProvider } from './context/UserContext';
+import { Container } from '@mui/material';
 
 function App() {
-  const userId = 2; // replace with login user id
 
   return (
-    <UserProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='users/:userId/profile' element={<ProfilePage />} />
-          <Route path='/users/:userId/items' element={<ItemsPage />} />
-          <Route path='/users/:userId/lent-out' element={<LentOutItemsPage />} />
-          <Route path='/users/:userId/borrowed' element={<BorrowedItemsPage />} />
-          <Route path='/users/:userId/archived' element={<ArchivedItemsPage />} />
-          <Route path='/users/:userId/upload' element={<UploadPage />} />
-          <Route path='/items/:itemId' element={<ItemDetailsPage />} />
-          <Route path='/items/:itemId/edit' element={<EditPage />} />
-          <Route path='/users/:userId/friends' element={<Friends />} />
-          <Route path='/users/:userId/notifications' element={<Notifications />} />
-        </Routes>
-      </BrowserRouter>
-    </UserProvider>
+    <Container maxWidth='lg' sx={{
+      bgcolor: 'white',
+      paddingLeft: { xs: 0, sm: 0, md: 0 },
+      paddingRight: { xs: 0, sm: 0, md: 0 },
+    }}>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='users/:userId/profile' element={<ProfilePage />} />
+            <Route path='/users/:userId/items' element={<ItemsPage />} />
+            <Route path='/users/:userId/loaned' element={<LentOutItemsPage />} />
+            <Route path='/users/:userId/borrowed' element={<BorrowedItemsPage />} />
+            <Route path='/users/:userId/archived' element={<ArchivedItemsPage />} />
+            <Route path='/users/:userId/upload' element={<UploadPage />} />
+            <Route path='/items/:itemId' element={<ItemDetailsPage />} />
+            <Route path='/items/:itemId/edit' element={<EditPage />} />
+            <Route path='/users/:userId/friends' element={<Friends />} />
+            <Route path='/users/:userId/notifications' element={<Notifications />} />
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
+    </Container>
   )
 }
 
