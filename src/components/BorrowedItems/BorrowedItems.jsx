@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './BorrowedItems.scss';
 import { useUser } from '../../context/UserContext';
-import BackButton from '../../components/BackButton/BackButton'
-import Filter from '../../components/Filter/Filter'
+import BackButton from '../../components/BackButton/BackButton';
+import Filter from '../../components/Filter/Filter';
 
 const BorrowedItems = () => {
     const { userId } = useUser();
@@ -69,10 +70,13 @@ const BorrowedItems = () => {
                 <div className='borrowed-items__list'>
                     {borrowedItems.map(item => (
                         <div key={item.id} className='borrowed-items__item'>
-                            <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} className='borrowed-items__image' />
+                            <Link to={`/items/${item.item_id}`}>
+                                <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} className='borrowed-items__image' />
+                            </Link>
                             <div className='borrowed-items__details'>
                                 <h3>{item.item_name}</h3>
                                 <p>Lender: {item.lender_first_name} {item.lender_last_name}</p>
+                                <p>Borrower: {item.borrower_first_name} {item.borrower_last_name}</p>
                                 <p>Start Date: {new Date(item.start_date).toLocaleDateString()}</p>
                                 <p>End Date: {new Date(item.end_date).toLocaleDateString()}</p>
                                 <p>Total Days: {totalDays(item.start_date, item.end_date)}</p>
@@ -97,4 +101,3 @@ const BorrowedItems = () => {
 };
 
 export default BorrowedItems;
-

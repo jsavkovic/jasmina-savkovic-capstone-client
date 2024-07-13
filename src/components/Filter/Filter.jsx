@@ -1,27 +1,37 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { useTheme, ThemeProvider } from '@mui/material/styles';
-import customTheme from '../../theme';
+import { styled } from '@mui/material/styles';
 
-const Filter = ({ itemTypes = [], borrowStatuses = [], onFilterChange }) => {
-    const outerTheme = useTheme();
+const Filter = ({ itemTypes, onFilterChange }) => {
+    const handleTypeChange = (event, value) => {
+        onFilterChange('type', value ? value.id : '');
+    };
 
     return (
-        <ThemeProvider theme={customTheme(outerTheme)}>
-            <Box sx={{ width: 300 }}>
-                <Autocomplete
-                    options={itemTypes}
-                    getOptionLabel={(option) => option.type}
-                    onChange={(event, value) => onFilterChange(value ? value.id : '')}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Filter Items" variant="outlined" />
-                    )}
-                />
-            </Box>
-        </ThemeProvider>
+        <Box sx={{ width: 300, margin: '1rem 0' }}>
+            <Autocomplete
+                options={itemTypes}
+                getOptionLabel={(option) => option.type}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                onChange={handleTypeChange}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label="Filter Items"
+                        variant="outlined"
+                    />
+                )}
+            />
+        </Box>
     );
+};
+
+Filter.propTypes = {
+    itemTypes: PropTypes.array.isRequired,
+    onFilterChange: PropTypes.func.isRequired,
 };
 
 export default Filter;

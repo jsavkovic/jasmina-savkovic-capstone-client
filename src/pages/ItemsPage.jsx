@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../components/Header/Header';
 import Filter from '../components/Filter/Filter';
+// import BorrowStatusFilter from '../components/Filter/BorrowStatusFilter';
 import ItemsList from '../components/ItemsList/ItemsList';
 import ArchivedItems from '../components/ArchivedItems/ArchivedItems'
 import Footer from '../components/Footer/Footer';
@@ -17,7 +18,8 @@ const ItemsPage = () => {
     const [error, setError] = useState(null);
     const [itemTypes, setItemTypes] = useState([]);
     const [userName, setUserName] = useState('');
-    const [selectedType, setSelectedType] = useState('');
+    // const [selectedType, setSelectedType] = useState('');
+    const [filters, setFilters] = useState({ type: '' });
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -51,13 +53,15 @@ const ItemsPage = () => {
                     axios.get(`${API_URL}/items/user/${selectedUserId}`, {
                         params: {
                             status_id: 1,
-                            type_id: selectedType || undefined
+                            type_id: filters.type || undefined,
+                            borrow_status_id: filters.status || undefined,
                         }
                     }),
                     axios.get(`${API_URL}/items/user/${selectedUserId}`, {
                         params: {
                             status_id: 2,
-                            type_id: selectedType || undefined
+                            type_id: filters.type || undefined,
+                            borrow_status_id: filters.status || undefined,
                         }
                     })
                 ]);
@@ -71,7 +75,7 @@ const ItemsPage = () => {
         };
 
         fetchItems();
-    }, [API_URL, selectedUserId, selectedType]);
+    }, [API_URL, selectedUserId, filters]);
 
     useEffect(() => {
         const fetchItemTypes = async () => {
@@ -86,9 +90,26 @@ const ItemsPage = () => {
         fetchItemTypes();
     }, [API_URL]);
 
-    const handleFilterChange = (typeId) => {
-        setSelectedType(typeId);
+    const handleFilterChange = (filterType, value) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            [filterType]: value,
+        }));
     };
+
+    // const fetchBorrowRequests = async (statusId) => {
+    //     try {
+    //         const response = await axios.get(`${API_URL}/borrow-requests/lender/${loggedInUserId}`, {
+    //             params: {
+    //                 borrow_status_id: statusId
+    //             }
+    //         });
+    //         setActiveItems(response.data);
+    //     } catch (err) {
+    //         console.error('Error fetching borrow requests:', err.message, err.stack);
+    //         setError('Failed to fetch borrow requests');
+    //     }
+    // };
 
     return (
         <>
@@ -96,8 +117,13 @@ const ItemsPage = () => {
             <main>
                 <div className='items__header'>
                     <h1 className='items__title'>{selectedUserId === loggedInUserId ? 'My Items' : `${userName}'s Items`}</h1>
-                    <Filter itemTypes={itemTypes} onFilterChange={handleFilterChange} />
+                    {itemTypes.length > 0 && (
+                        <Filter itemTypes={itemTypes} onFilterChange={handleFilterChange} />
+                    )}
                 </div>
+                {/* <div>
+                    <BorrowStatusFilter onFilterChange={(statusId) => fetchBorrowRequests(statusId)} />
+                </div> */}
                 {/* <div className="items__filter">
                     <Filter itemTypes={itemTypes} onFilterChange={handleFilterChange} />
                 </div> */}

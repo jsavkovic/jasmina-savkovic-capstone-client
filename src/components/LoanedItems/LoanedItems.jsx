@@ -1,6 +1,6 @@
-import React from 'react';
+import './LoanedItems.scss'
 
-const LentOutItems = () => {
+const LoanedItems = () => {
     return (
         <div>
             <h1>Lent Out Items</h1>
@@ -9,4 +9,4 @@ const LentOutItems = () => {
     );
 };
 
-export default LentOutItems;
+export default LoanedItems;
