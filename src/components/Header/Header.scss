@@ -77,19 +77,27 @@
 
         .MuiTabs-flexContainer {
             display: flex;
+            flex-direction: column;
             justify-content: flex-end;
             flex-wrap: wrap;
+
+            @include xs {
+                flex-direction: row;
+            }
         }
 
         .MuiTab-root {
             background-color: $dark-blue;
             color: $alternate-light-grey;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
 
             &.Mui-selected {
                 color: $light-pink;
-                border-bottom: 2px solid $light-pink;
-                transition: all 0.5s ease-in-out;
+
+                @include xs {
+                    border-bottom: 2px solid $light-pink;
+                    transition: all 0.5s ease-in-out;
+                }
             }
 
             &:hover {
@@ -100,6 +108,7 @@
         .MuiTabs-indicator {
             background-color: $light-pink;
             transition: all 0.3s ease-in-out;
+            border-bottom: none;
         }
     }
 }
