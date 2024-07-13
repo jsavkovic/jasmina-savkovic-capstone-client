@@ -8,6 +8,12 @@
   }
 }
 
+@mixin small {
+  @media screen and (min-width: $xs-breakpoint) {
+    @content;
+  }
+}
+
 @mixin tablet {
   @media screen and (min-width: $tablet-breakpoint) {
     @content;

@@ -2,41 +2,49 @@
 @use "../../styles/partials/mixins" as *;
 
 .items-list {
-    &__header {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 1rem;
-        color: $dark-blue;
-        }
+    // &__header {
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: space-between;
+    //     padding-left: 1rem;
+    //     color: $dark-blue;
+    //     }
 
         &__title {
             // padding: 1rem;
             font-size: 2.5rem;
         }
 
-        &__icons {
-            display: flex;
-        justify-content: space-between;
-        padding: 1rem;
-        color: $dark-blue;
-        }
+        // &__icons {
+        //     display: flex;
+        // justify-content: space-between;
+        // padding: 1rem;
+        // color: $dark-blue;
+        // }
 
     &__grid {
     background-color: white;
     color: $dark-blue;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     // padding: 1rem;
     border-radius: .625rem;
     margin: 1rem;
-    max-height: 50rem;
-    overflow: scroll;
+    // max-height: 50rem;
+    // overflow: scroll;
+
+    @include small {
+        justify-content: flex-start;
+    }
+    }
+
+    &__error {
+        
     }
 
     &__item {
-        width: 30%;
+        width: 80%;
         margin: 0.5rem;
         padding: 0.5rem;
         display: flex;
@@ -49,6 +57,17 @@
         overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
         background-color: white;
+        
+        @include small {
+            width: 46%;
+        }
+        @include tablet {
+            width:30%;
+        }
+
+        @include desktop {
+            width: 23%
+        }
 
         a {
             width: 100%;

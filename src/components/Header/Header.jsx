@@ -54,6 +54,7 @@ const Header = () => {
                 {paths.map((path, index) => (
                     <Tab
                         key={index}
+                        className='header__tab'
                         label={index === 0 ? "My Listings" : index === 1 ? "Borrowed Items" : "Friends"}
                         component={NavLink}
                         to={path}
