@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './LoanedItems.scss';
 import { useUser } from '../../context/UserContext';
 import BackButton from '../../components/BackButton/BackButton';
-import Filter from '../../components/Filter/Filter';
 
 const LoanedItems = () => {
     const { userId } = useUser();
@@ -61,13 +60,12 @@ const LoanedItems = () => {
 
     return (
         <section className='loaned-items'>
-            <div className='item-details__icons'>
+            <div className='loaned-items__icons'>
                 <BackButton to={-1} />
-                <Filter />
             </div>
             <h1 className='loaned-items__title'>Loaned Items</h1>
             {loanedItems.length > 0 ? (
-                <div className='loaned-items__list'>
+                <div className='loaned-items__grid'>
                     {loanedItems.map(item => (
                         <div key={item.id} className='loaned-items__item'>
                             <Link to={`/items/${item.item_id}`}>

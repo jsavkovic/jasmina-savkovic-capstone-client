@@ -7,6 +7,7 @@ import BackButton from '../BackButton/BackButton'
 import EditButton from '../EditButton/EditButton'
 import DeleteButton from '../DeleteButton/DeleteButton'
 import DeleteModal from '../DeleteModal/DeleteModal';
+import ListSwitch from '../ListSwitch/ListSwitch';
 
 const ItemDetails = ({ item, refreshItems }) => {
     const { userId } = useUser();
@@ -48,21 +49,21 @@ const ItemDetails = ({ item, refreshItems }) => {
         }
     };
 
-    const toggleStatus = async () => {
-        const newStatusId = item.status_id === 1 ? 2 : 1;
-        const newStatus = newStatusId === 1 ? 'Listed' : 'Inactive';
+    const toggleStatus = async (isChecked) => {
+        const newStatusId = isChecked ? 1 : 2;
+        const newStatus = isChecked ? 'Listed' : 'Inactive';
 
         try {
             await axios.put(`${API_URL}/items/${item.id}/status`, { status_id: newStatusId });
             setItemStatus(newStatus);
             item.status_id = newStatusId;
             setIsUpdating(false);
-
         } catch (err) {
             console.error('Error updating item status:', err);
             setIsUpdating(false);
         }
     };
+
 
     const validateDates = () => {
         if (!startDate || !endDate) {
@@ -197,16 +198,19 @@ const ItemDetails = ({ item, refreshItems }) => {
                         </button>
                     </div>
                 )}
-                <p className={`item-details__status item-details__status--${itemStatus === 'Listed' ? 'green' : 'grey'}`}>
+                {/* <p className={`item-details__status item-details__status--${itemStatus === 'Listed' ? 'green' : 'grey'}`}>
                     Item status: {itemStatus}
-                </p>
-                <button
+                </p> */}
+                {userId === item.user_id && (
+                    <ListSwitch isChecked={itemStatus === 'Listed'} onSwitchChange={toggleStatus} />
+                )}
+                {/* <button
                     onClick={toggleStatus}
                     disabled={isUpdating}
                     className='item-details__button'
                 >
                     {itemStatus === 'Listed' ? 'Archive Item' : 'List Item'}
-                </button>
+                </button> */}
             </div>
         </section>
     );

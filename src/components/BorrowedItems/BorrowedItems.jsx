@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './BorrowedItems.scss';
 import { useUser } from '../../context/UserContext';
 import BackButton from '../../components/BackButton/BackButton';
-import Filter from '../../components/Filter/Filter';
 
 const BorrowedItems = () => {
     const { userId } = useUser();
@@ -61,41 +60,44 @@ const BorrowedItems = () => {
 
     return (
         <section className='borrowed-items'>
-            <div className='item-details__icons'>
+            <div className='borrowed-items__icons'>
                 <BackButton to={-1} />
-                <Filter />
             </div>
             <h1 className='borrowed-items__title'>Borrowed Items</h1>
-            {borrowedItems.length > 0 ? (
-                <div className='borrowed-items__list'>
-                    {borrowedItems.map(item => (
-                        <div key={item.id} className='borrowed-items__item'>
-                            <Link to={`/items/${item.item_id}`}>
-                                <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} className='borrowed-items__image' />
-                            </Link>
+            <div className='borrowed-items__grid'>
+                {borrowedItems.length > 0 ? (
+                    borrowedItems.map(item => (
+                        <Link to={`/items/${item.item_id}`} className='borrowed-items__card' key={item.id}>
                             <div className='borrowed-items__details'>
-                                <h3>{item.item_name}</h3>
-                                <p>Lender: {item.lender_first_name} {item.lender_last_name}</p>
-                                <p>Borrower: {item.borrower_first_name} {item.borrower_last_name}</p>
-                                <p>Start Date: {new Date(item.start_date).toLocaleDateString()}</p>
-                                <p>End Date: {new Date(item.end_date).toLocaleDateString()}</p>
-                                <p>Total Days: {totalDays(item.start_date, item.end_date)}</p>
-                                <p>Status: {getStatusLabel(item.borrow_status_id)}</p>
-                                {item.borrow_status_id === 1 && (
-                                    <button
-                                        onClick={() => cancelRequest(item.id)}
-                                        className='borrowed-items__cancel-button'
-                                    >
-                                        Cancel Request
-                                    </button>
+                                {item.item_image ? (
+                                    <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} className='borrowed-items__image' />
+                                ) : (
+                                    'No Image'
                                 )}
+                                <div className='borrowed-items__info'>
+                                    <h3>{item.item_name}</h3>
+                                    <p>Lender: {item.lender_first_name} {item.lender_last_name}</p>
+                                    <p>Borrower: {item.borrower_first_name} {item.borrower_last_name}</p>
+                                    <p>Start Date: {new Date(item.start_date).toLocaleDateString()}</p>
+                                    <p>End Date: {new Date(item.end_date).toLocaleDateString()}</p>
+                                    <p>Total Days: {totalDays(item.start_date, item.end_date)}</p>
+                                    <p>Status: {getStatusLabel(item.borrow_status_id)}</p>
+                                    {item.borrow_status_id === 1 && (
+                                        <button
+                                            onClick={(e) => { e.preventDefault(); cancelRequest(item.id); }}
+                                            className='borrowed-items__cancel-button'
+                                        >
+                                            Cancel Request
+                                        </button>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p>No borrowed items found</p>
-            )}
+                        </Link>
+                    ))
+                ) : (
+                    <p>No borrowed items found</p>
+                )}
+            </div>
         </section>
     );
 };

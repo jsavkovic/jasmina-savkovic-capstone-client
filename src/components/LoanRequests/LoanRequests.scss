@@ -1,15 +1,8 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.borrowed-items {
+.loan-requests {
     padding: 2rem;
-
-    &__icons {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
 
     &__title {
         padding: 1rem 0;
@@ -19,17 +12,17 @@
     &__grid {
         display: grid;
         gap: 1rem;
-
+        
         @include small {
-            grid-template-columns: 1fr; // 1 column on small screens
+            grid-template-columns: 1fr; 
         }
 
         @include tablet {
-            grid-template-columns: repeat(2, 1fr); // 2 columns on medium screens
+            grid-template-columns: repeat(2, 1fr); 
         }
 
         @include desktop {
-            grid-template-columns: repeat(3, 1fr); // 3 columns on large screens
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 
@@ -65,25 +58,58 @@
         gap: 0.5rem;
     }
 
-    &__info {
+    &__actions {
         display: flex;
-        flex-direction: column;
         gap: 0.5rem;
+        margin-top: 1rem;
     }
 
-    &__cancel-button {
+    &__button {
         padding: 0.5rem 1rem;
-        background-color: $dark-blue;
-        color: #fff;
         border: none;
         border-radius: 3.125rem;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        max-width: 20rem;
 
-        &:hover {
-            background-color: $light-pink;
+        &--accept {
+            background-color: $dark-blue;
+            color: #fff;
+
+            &:hover {
+                background-color: $light-pink;
+                color: $dark-blue;
+            }
+        }
+
+        &--decline {
+            background-color: white;
             color: $dark-blue;
+            border: 1px solid $light-pink;
+
+            &:hover {
+                background-color: $light-pink;
+                color: $dark-blue;
+            }
+        }
+
+        &--borrowed {
+            background-color: $dark-blue;
+            color: #fff;
+
+            &:hover {
+                background-color: $light-pink;
+                color: $dark-blue;
+            }
+        }
+
+        &--return {
+            background-color: $dark-blue;
+            color: #fff;
+
+            &:hover {
+                background-color: $light-pink;
+                color: $dark-blue;
+            }
         }
     }
 }

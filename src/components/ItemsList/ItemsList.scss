@@ -2,25 +2,34 @@
 @use "../../styles/partials/mixins" as *;
 
 .items-list {
-    // &__header {
-    //     display: flex;
-    //     flex-direction: column;
-    //     justify-content: space-between;
-    //     padding-left: 1rem;
-    //     color: $dark-blue;
-    //     }
+    &__title {
+        font-size: 2.5rem;
+    }
 
-        &__title {
-            // padding: 1rem;
-            font-size: 2.5rem;
+    &__container {
+        position: relative;
+        width: 100%;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.723);
+            pointer-events: none;
         }
+    }
 
-        // &__icons {
-        //     display: flex;
-        // justify-content: space-between;
-        // padding: 1rem;
-        // color: $dark-blue;
-        // }
+    &__hero {
+        width: 100%;
+        height: auto;
+        display: block;
+        max-width: 100%;
+        object-fit: cover;
+        overflow: hidden;
+    }
 
     &__grid {
     background-color: white;

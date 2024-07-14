@@ -4,6 +4,7 @@ import './ItemsList.scss'
 import { Link } from 'react-router-dom';
 // import BackButton from '../BackButton/BackButton';
 // import Filter from '../Filter/Filter';
+import hero from '../../assets/images/hero2.jpg'
 
 const ItemsList = ({
     items,
@@ -21,6 +22,9 @@ const ItemsList = ({
             {/* <div className='items-list__header'>
                 <h1 className='items-list__title'>{selectedUserId === loggedInUserId ? 'My Items' : `${userName}'s Items`}</h1>
             </div> */}
+            <div className='items-list__container'>
+                <img className='items-list__hero' src={hero} alt='hero image' />
+            </div>
             <div className="items-list__grid">
                 {error && <p className="items-list__error">{error}</p>}
                 {items.length > 0 && (
