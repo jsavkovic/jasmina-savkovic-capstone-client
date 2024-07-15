@@ -1,14 +1,13 @@
 import './ItemsList.scss';
 import { Link } from 'react-router-dom';
-import hero from '../../assets/images/hero2.jpg';
 import Filter from '../Filter/Filter';
 
 const ItemsList = ({
     items,
     error,
-    userName,
-    selectedUserId,
     loggedInUserId,
+    userName,
+    friendId,
     itemTypes,
     onFilterChange
 }) => {
@@ -16,12 +15,15 @@ const ItemsList = ({
 
     return (
         <section className="items-list">
-
             <div className="items-list__header">
-                <h1 className="items-list__title">{selectedUserId === loggedInUserId ? 'My Items' : `${userName}'s Items`}</h1>
-                <Link to={`/users/${loggedInUserId}/upload`} className="items-list__add-button">
-                    Add New Item
-                </Link>
+                <h1 className="items-list__title">
+                    {friendId ? `${userName}'s Items` : 'My Items'}
+                </h1>
+                {!friendId && (
+                    <Link to="/upload" className="items-list__add-button">
+                        Add New Item
+                    </Link>
+                )}
                 {itemTypes.length > 0 && (
                     <Filter itemTypes={itemTypes} onFilterChange={onFilterChange} />
                 )}

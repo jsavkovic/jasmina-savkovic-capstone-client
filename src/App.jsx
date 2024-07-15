@@ -26,14 +26,15 @@ function App() {
           <Routes>
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
-            <Route path='users/:userId/profile' element={<ProfilePage />} />
-            <Route path='/users/:userId/items' element={<ItemsPage />} />
-            <Route path='/users/:userId/loaned' element={<LoanedItemsPage />} />
-            <Route path='/users/:userId/borrowed' element={<BorrowedItemsPage />} />
-            <Route path='/users/:userId/upload' element={<UploadPage />} />
+            <Route path='/' element={<ProfilePage />} />
+            <Route path='/items' element={<ItemsPage />} />
+            <Route path='/loaned' element={<LoanedItemsPage />} />
+            <Route path='/borrowed' element={<BorrowedItemsPage />} />
+            <Route path='/upload' element={<UploadPage />} />
             <Route path='/items/:itemId' element={<ItemDetailsPage />} />
             <Route path='/items/:itemId/edit' element={<EditPage />} />
-            <Route path='/users/:userId/friends' element={<Friends />} />
+            <Route path='/friends' element={<Friends />} />
+            <Route path="/:friendId/items" element={<ItemsPage />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../components/Header/Header';
@@ -8,52 +8,32 @@ import Footer from '../components/Footer/Footer';
 import { useUser } from '../context/UserContext';
 
 const ItemsPage = () => {
-    const { userId: selectedUserId } = useParams();
+    const { friendId } = useParams();
+    const location = useLocation();
+    const friendNameFromState = location.state?.friendName || null;
     const { userId: loggedInUserId } = useUser();
     const [activeItems, setActiveItems] = useState([]);
     const [inactiveItems, setInactiveItems] = useState([]);
     const [error, setError] = useState(null);
     const [itemTypes, setItemTypes] = useState([]);
-    const [userName, setUserName] = useState('');
+    const [friendName, setFriendName] = useState(friendNameFromState);
     const [filters, setFilters] = useState({ type: '' });
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        const fetchUserName = async () => {
-            try {
-                const response = await axios.get(`${API_URL}/user/${selectedUserId}`);
-                const user = response.data;
-
-                if (user) {
-                    setUserName(user.first_name);
-                } else {
-                    setUserName('User not found');
-                }
-            } catch (err) {
-                console.error('Error fetching user name:', err);
-            }
-        };
-
-        fetchUserName();
-    }, [API_URL, selectedUserId]);
-
-    useEffect(() => {
-        if (!selectedUserId) {
-            setError('Invalid User Id');
-            return;
-        }
+        const userId = friendId || loggedInUserId;
 
         const fetchItems = async () => {
             try {
                 const [response1, response2] = await Promise.all([
-                    axios.get(`${API_URL}/items/user/${selectedUserId}`, {
+                    axios.get(`${API_URL}/items/user/${userId}`, {
                         params: {
                             status_id: 1,
                             type_id: filters.type || undefined,
                             borrow_status_id: filters.status || undefined,
                         }
                     }),
-                    axios.get(`${API_URL}/items/user/${selectedUserId}`, {
+                    axios.get(`${API_URL}/items/user/${userId}`, {
                         params: {
                             status_id: 2,
                             type_id: filters.type || undefined,
@@ -71,7 +51,7 @@ const ItemsPage = () => {
         };
 
         fetchItems();
-    }, [API_URL, selectedUserId, filters]);
+    }, [API_URL, friendId, loggedInUserId, filters]);
 
     useEffect(() => {
         const fetchItemTypes = async () => {
@@ -85,6 +65,21 @@ const ItemsPage = () => {
 
         fetchItemTypes();
     }, [API_URL]);
+
+    useEffect(() => {
+        const fetchFriendName = async () => {
+            if (!friendName && friendId) {
+                try {
+                    const response = await axios.get(`${API_URL}/user/${friendId}`);
+                    setFriendName(response.data.first_name);
+                } catch (err) {
+                    console.error('Error fetching friend name:', err);
+                }
+            }
+        };
+
+        fetchFriendName();
+    }, [friendName, friendId, API_URL]);
 
     const handleFilterChange = (filterType, value) => {
         setFilters((prevFilters) => ({
@@ -100,9 +95,9 @@ const ItemsPage = () => {
                 <ItemsList
                     items={activeItems}
                     error={error}
-                    userName={userName}
-                    selectedUserId={selectedUserId}
                     loggedInUserId={loggedInUserId}
+                    userName={friendName || "My"}
+                    friendId={friendId}
                     itemTypes={itemTypes}
                     onFilterChange={handleFilterChange}
                 />
