@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './BorrowedItems.scss';
-import Legend from '../Legend/Legend';
 import { useUser } from '../../context/UserContext';
 import BackButton from '../../components/BackButton/BackButton';
 
@@ -112,21 +111,10 @@ const BorrowedItems = () => {
         return '';
     };
 
-    // const getClassName = (item) => {
-    //     if (item.borrow_status_id !== 3) return '';
-
-    //     const daysUntilDue = getDaysUntilDue(item.end_date);
-    //     if (daysUntilDue < 0) return '--overdue';
-    //     if (daysUntilDue === 0) return '--today';
-    //     if (daysUntilDue <= 2) return '--soon';
-    //     return '';
-    // };
-
     return (
         <section className='borrowed-items'>
             <div className='borrowed-items__icons'>
                 <BackButton to={-1} />
-                <Legend />
             </div>
             <h1 className='borrowed-items__title'>Borrowed Items</h1>
             <div className='borrowed-items__grid'>

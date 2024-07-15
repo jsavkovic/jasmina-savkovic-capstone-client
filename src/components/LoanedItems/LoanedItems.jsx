@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './LoanedItems.scss';
+import Legend from '../Legend/Legend';
 import { useUser } from '../../context/UserContext';
 import BackButton from '../../components/BackButton/BackButton';
 
@@ -24,20 +25,40 @@ const LoanedItems = () => {
         fetchLoanedItems();
     }, [API_URL, userId]);
 
-    const cancelRequest = async (requestId) => {
+    const handleStatusUpdate = async (requestId, status) => {
         try {
-            await axios.delete(`${API_URL}/borrow-requests/${requestId}`);
-            setLoanedItems(loanedItems.filter(item => item.id !== requestId));
-            console.log('Borrow request cancelled');
+            await axios.put(`${API_URL}/borrow-requests/${requestId}`, { borrow_status_id: status });
+            setLoanedItems(loanedItems.map(item => item.id === requestId ? { ...item, borrow_status_id: status } : item));
+            console.log(`Borrow request ${requestId} status updated to ${status}`);
         } catch (err) {
-            console.error('Error cancelling borrow request:', err);
+            console.error(`Error updating borrow request ${requestId} status to ${status}:`, err.response ? err.response.data : err.message);
         }
     };
+
+    const handleAcceptRequest = (requestId) => handleStatusUpdate(requestId, 2); // 2 for accepted
+    const handleDeclineRequest = (requestId) => handleStatusUpdate(requestId, 5); // 5 for declined
+    const handlePickUpRequest = (requestId) => handleStatusUpdate(requestId, 3); // 3 for borrowed
+    const handleReturnRequest = (requestId) => handleStatusUpdate(requestId, 4); // 4 for returned
+    const handleCancelRequest = (requestId) => handleStatusUpdate(requestId, 6); // 6 for cancelled
 
     const totalDays = (startDate, endDate) => {
         const start = new Date(startDate);
         const end = new Date(endDate);
         const diffTime = Math.abs(end - start);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    };
+
+    const getDaysUntilDue = (endDate) => {
+        const end = new Date(endDate);
+        const today = new Date();
+        const diffTime = end - today;
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    };
+
+    const getDaysUntilPickup = (startDate) => {
+        const start = new Date(startDate);
+        const today = new Date();
+        const diffTime = start - today;
         return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     };
 
@@ -53,47 +74,161 @@ const LoanedItems = () => {
                 return 'Returned';
             case 5:
                 return 'Declined';
+            case 6:
+                return 'Cancelled';
             default:
                 return 'Unknown';
         }
     };
 
+    const getStatusOrder = (statusId) => {
+        switch (statusId) {
+            case 1:
+                return 1; // Pending
+            case 3:
+                return 2; // Borrowed
+            case 2:
+                return 3; // Accepted
+            case 4:
+                return 4; // Returned
+            case 5:
+                return 5; // Declined
+            case 6:
+                return 6; // Cancelled
+            default:
+                return 7; // Unknown
+        }
+    };
+
+    const sortedLoanedItems = loanedItems.slice().sort((a, b) => {
+        const statusOrderDiff = getStatusOrder(a.borrow_status_id) - getStatusOrder(b.borrow_status_id);
+        if (statusOrderDiff !== 0) return statusOrderDiff;
+
+        // If statuses are the same, sort by start date for pending items
+        if (a.borrow_status_id === 1 && b.borrow_status_id === 1) {
+            return new Date(a.start_date) - new Date(b.start_date);
+        }
+
+        // Sort by due date for borrowed items
+        if (a.borrow_status_id === 3 && b.borrow_status_id === 3) {
+            return new Date(a.end_date) - new Date(b.end_date);
+        }
+
+        // Default to sorting by start date for other statuses
+        return new Date(a.start_date) - new Date(b.start_date);
+    });
+
+    const getCardClassName = (item) => {
+        if (item.borrow_status_id === 2) return '--pickup';
+        if (item.borrow_status_id !== 3) return '';
+
+        const daysUntilDue = getDaysUntilDue(item.end_date);
+        if (daysUntilDue < 0) return '--overdue';
+        if (daysUntilDue === 0) return '--today';
+        if (daysUntilDue <= 2) return '--soon';
+        return '';
+    };
+
+    // const getCardClassName = (item) => {
+    //     if (item.borrow_status_id !== 3) return '';
+
+    //     const daysUntilDue = getDaysUntilDue(item.end_date);
+    //     if (daysUntilDue < 0) return '--overdue';
+    //     if (daysUntilDue === 0) return '--today';
+    //     if (daysUntilDue <= 2) return '--soon';
+    //     return '';
+    // };
+
     return (
         <section className='loaned-items'>
             <div className='loaned-items__icons'>
                 <BackButton to={-1} />
+                <Legend />
             </div>
             <h1 className='loaned-items__title'>Loaned Items</h1>
-            {loanedItems.length > 0 ? (
-                <div className='loaned-items__grid'>
-                    {loanedItems.map(item => (
-                        <div key={item.id} className='loaned-items__item'>
-                            <Link to={`/items/${item.item_id}`}>
-                                <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} className='loaned-items__image' />
-                            </Link>
+            <div className='loaned-items__grid'>
+                {sortedLoanedItems.length > 0 ? (
+                    sortedLoanedItems.map(item => (
+                        <Link to={`/items/${item.item_id}`} className={`loaned-items__card loaned-items__card${getCardClassName(item)}`} key={item.id}>
                             <div className='loaned-items__details'>
-                                <h3>{item.item_name}</h3>
-                                <p>Lender: {item.lender_first_name} {item.lender_last_name}</p>
-                                <p>Borrower: {item.borrower_first_name} {item.borrower_last_name}</p>
-                                <p>Start Date: {new Date(item.start_date).toLocaleDateString()}</p>
-                                <p>End Date: {new Date(item.end_date).toLocaleDateString()}</p>
-                                <p>Total Days: {totalDays(item.start_date, item.end_date)}</p>
-                                <p>Status: {getStatusLabel(item.borrow_status_id)}</p>
-                                {item.borrow_status_id === 1 && (
-                                    <button
-                                        onClick={() => cancelRequest(item.id)}
-                                        className='loaned-items__cancel-button'
-                                    >
-                                        Cancel Request
-                                    </button>
+                                {item.item_image ? (
+                                    <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} className='loaned-items__image' />
+                                ) : (
+                                    'No Image'
                                 )}
+                                <div className='loaned-items__info'>
+                                    {item.borrow_status_id === 3 && (
+                                        <p className={`loaned-items__duedate loaned-items__duedate${getCardClassName(item)}`}> -- Due in {getDaysUntilDue(item.end_date)} days --</p>
+                                    )}
+                                    {item.borrow_status_id === 2 && (
+                                        <p className={`loaned-items__pickup loaned-items__pickup${getCardClassName(item)}`}>Pick up in {getDaysUntilPickup(item.start_date)} days</p>
+                                    )}
+                                    <h3>{item.item_name}</h3>
+                                    <p>Lender: <strong>{item.lender_first_name} {item.lender_last_name}</strong></p>
+                                    <p>Borrower: <strong>{item.borrower_first_name} {item.borrower_last_name}</strong></p>
+                                    <p>Start: <strong>{new Date(item.start_date).toLocaleDateString()}</strong></p>
+                                    <p>End: <strong>{new Date(item.end_date).toLocaleDateString()}</strong></p>
+                                    <p>Total: <strong>{totalDays(item.start_date, item.end_date)} days</strong></p>
+                                    <p>Status: <strong>{getStatusLabel(item.borrow_status_id)}</strong></p>
+
+                                    {item.borrow_status_id === 1 && (
+                                        <div className='loaned-items__actions'>
+                                            <button
+                                                onClick={() => handleAcceptRequest(item.id)}
+                                                className='loaned-items__action-button'
+                                            >
+                                                Accept
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeclineRequest(item.id)}
+                                                className='loaned-items__action-button loaned-items__action-button--cancel'
+                                            >
+                                                Decline
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    {item.borrow_status_id === 2 && (
+                                        <div className='loaned-items__actions'>
+                                            <button
+                                                onClick={() => handlePickUpRequest(item.id)}
+                                                className='loaned-items__action-button'
+                                            >
+                                                Picked Up
+                                            </button>
+                                            <button
+                                                onClick={() => handleCancelRequest(item.id)}
+                                                className='loaned-items__action-button loaned-items__action-button--cancel'
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    {item.borrow_status_id === 3 && (
+                                        <div className='loaned-items__actions'>
+                                            <button
+                                                onClick={() => handleReturnRequest(item.id)}
+                                                className='loaned-items__action-button'
+                                            >
+                                                Returned
+                                            </button>
+                                            <button
+                                                onClick={() => handleCancelRequest(item.id)}
+                                                className='loaned-items__action-button loaned-items__action-button--cancel'
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p>No loaned items found</p>
-            )}
+                        </Link>
+                    ))
+                ) : (
+                    <p>No loaned items found</p>
+                )}
+            </div>
         </section>
     );
 };

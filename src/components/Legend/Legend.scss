@@ -19,6 +19,12 @@
         padding: 0;
         margin: 0;
         display: flex;
+        flex-direction: column;
+
+        @include small {
+            flex-direction: row;
+        }
+        
     }
 
     &__item {
@@ -35,7 +41,7 @@
         }
 
         &--soon .legend__color {
-            background-color: rgb(255, 255, 0);
+            background-color: #ffff00;
         }
 
         &--today .legend__color {
