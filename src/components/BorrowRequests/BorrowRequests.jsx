@@ -11,7 +11,7 @@ const BorrowRequests = () => {
     useEffect(() => {
         const fetchBorrowRequests = async () => {
             try {
-                const response = await axios.get(`${API_URL}/borrow-requests/lender/${userId}`);
+                const response = await axios.get(`${API_URL}/borrow-requests/borrower/${userId}`);
                 setBorrowRequests(response.data);
                 console.log('Fetched borrow requests:', response.data);
             } catch (err) {
@@ -29,6 +29,8 @@ const BorrowRequests = () => {
                     <div>Image</div>
                     <div>Item</div>
                     <div>Borrower</div>
+                    <div>Lender</div>
+                    <div>Status</div>
                     <div>Requested On</div>
                     <div>Actions</div>
                 </div>

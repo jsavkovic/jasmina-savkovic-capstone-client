@@ -19,17 +19,18 @@
     &__grid {
         display: grid;
         gap: 1rem;
+        grid-template-columns: 1fr; 
 
         @include small {
-            grid-template-columns: 1fr; // 1 column on small screens
+            grid-template-columns: repeat(2, 1fr); 
         }
 
         @include tablet {
-            grid-template-columns: repeat(2, 1fr); // 2 columns on medium screens
+            grid-template-columns: repeat(3, 1fr); 
         }
 
         @include desktop {
-            grid-template-columns: repeat(3, 1fr); // 3 columns on large screens
+            grid-template-columns: repeat(4, 1fr); 
         }
     }
 
@@ -37,7 +38,7 @@
         background-color: #fff;
         border: 1px solid #ddd;
         border-radius: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.267);
         padding: 1rem;
         display: flex;
         flex-direction: column;
@@ -49,6 +50,28 @@
             transform: translateY(-0.5rem);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
+
+        &--overdue {
+            border: 2px solid red;
+            // background-color: #f7eded;
+            // color: red;
+        }
+        
+        &--today {
+            border: 2px solid orange;
+            // background-color: #fff4e6;
+            // color: orange;
+        }
+        
+        &--soon {
+            border: 2px solid yellow;
+            // background-color: #fffbe6;
+        }
+
+        &--pickup {
+            border: 2px solid  $light-green;
+        }
+        
     }
 
     &__image {
@@ -57,11 +80,20 @@
         object-fit: cover;
         border-radius: 0.5rem;
         margin-bottom: 1rem;
+
+        @include small {
+            width: 60%;
+        }
+
+        @include tablet {
+            width: 80%;
+        }
     }
 
     &__details {
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 0.5rem;
     }
 
@@ -69,6 +101,44 @@
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        font-size: .8rem;
+    }
+    &__duedate {
+        text-align: center;
+        font-weight: bold;
+        border: 1px solid $light-grey;
+        border-radius: .625rem;
+        padding: 0.25rem;
+        margin-bottom: 0.25rem;
+
+
+        &--overdue {
+            border: 2px solid red;
+            // background-color: #f7eded;
+            // color: red;
+        }
+        
+        &--today {
+            border: 2px solid orange;
+            // background-color: #fff4e6;
+            // color: orange;
+        }
+        
+        &--soon {
+            border: 2px solid yellow;
+            // background-color: #fffbe6;
+        }
+    }
+
+    &__pickup {
+        text-align: center;
+        font-weight: bold;
+        border: 1px solid $light-green;
+        border-radius: .625rem;
+        padding: 0.25rem;
+        margin-bottom: 0.25rem;
+
+        
     }
 
     &__cancel-button {
@@ -87,3 +157,4 @@
         }
     }
 }
+
