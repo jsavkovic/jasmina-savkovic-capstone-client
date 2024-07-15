@@ -27,7 +27,11 @@ const FriendList = ({ userId }) => {
                 <ul>
                     {friends.map(friend => (
                         <li key={friend.id} className='friends__item'>
-                            <Link to={`/users/${friend.id}/items`} className='friends__link'>
+                            <Link
+                                to={`/${friend.id}/items`}
+                                state={{ friendName: friend.first_name }}
+                                className='friends__link'
+                            >
                                 <img src={`${API_URL}/uploads/users/${friend.image}`} alt={`${friend.first_name} ${friend.last_name}`} className='friends__image' />
                                 <div className='friends__details'>
                                     <h3 className='friends__name'>{friend.first_name} {friend.last_name}</h3>
