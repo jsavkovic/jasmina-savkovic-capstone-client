@@ -32,7 +32,7 @@ const UploadItemForm = () => {
         type_id: '',
         status_id: '',
         image: null,
-        user_id: userId // Set user_id to the actual user id once auth is set up
+        user_id: userId
     });
     const [errors, setErrors] = useState({});
     const [imagePreview, setImagePreview] = useState('');
