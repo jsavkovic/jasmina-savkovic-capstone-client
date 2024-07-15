@@ -1,0 +1,30 @@
+@use "../styles/partials/variables" as *;
+@use "../styles/partials/mixins" as *;
+
+.switch-container {
+    height: 3rem;
+    width: 90%;
+    background-color: $dark-blue;
+    margin: 2rem;
+    border-radius: 3.125rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    &__switch-button {
+        cursor: pointer;
+        height: 2rem;
+        width: 45%;
+        border-radius: 3.125rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $dark-blue;
+        color: $alternate-light-grey;
+
+        &--selected {
+            background-color: $light-pink;
+            color: $dark-blue;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.delete-button {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &__icon {
+        width: 24px; 
+        height: 24px;
+        margin-right: 8px; 
+    }
+}

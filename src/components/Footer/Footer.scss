@@ -1,0 +1,13 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.footer {
+  font-size: .85rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $dark-blue;
+  background-color: $alternate-light-grey;
+  padding: 2.5rem;
+  text-align: center;
+}
