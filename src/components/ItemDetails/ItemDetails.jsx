@@ -134,7 +134,7 @@ const ItemDetails = ({ item, refreshItems }) => {
         <section className='item-details'>
             <div className='item-details__header'>
                 <div className='item-details__icons'>
-                    <BackButton to={`/users/${item.user_id}/items`} />
+                    <BackButton to={-1} />
                     <div className='item-details__icons--right'>
                         {userId === item.user_id && (
                             <>
