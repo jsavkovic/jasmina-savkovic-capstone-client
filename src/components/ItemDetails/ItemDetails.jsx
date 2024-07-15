@@ -74,7 +74,7 @@ const ItemDetails = ({ item, refreshItems }) => {
         const start = new Date(startDate);
         const end = new Date(endDate);
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Set to the beginning of the day
+        today.setHours(0, 0, 0, 0);
 
         if (start < today || end < today) {
             setDateError('Start date and end date must be today or later.');
@@ -91,7 +91,7 @@ const ItemDetails = ({ item, refreshItems }) => {
     };
 
     const handleRequest = async () => {
-        setSuccessMessage(''); // Clear the success message when a new request is initiated
+        setSuccessMessage('');
 
         if (!validateDates()) {
             return;
@@ -113,7 +113,7 @@ const ItemDetails = ({ item, refreshItems }) => {
             console.log('Borrow request created');
             setRequestError('');
             setSuccessMessage('Borrow request created successfully.');
-            fetchBorrowRequests(); // Refresh borrow requests after successful creation
+            fetchBorrowRequests();
         } catch (err) {
             console.error('Error creating borrow request:', err);
             if (err.response && err.response.data && err.response.data.error) {
@@ -172,7 +172,7 @@ const ItemDetails = ({ item, refreshItems }) => {
                                         value={startDate}
                                         onChange={(e) => {
                                             setStartDate(e.target.value);
-                                            setSuccessMessage(''); // Clear the success message when new input is given
+                                            setSuccessMessage('');
                                         }}
                                     />
                                 </label>
@@ -183,7 +183,7 @@ const ItemDetails = ({ item, refreshItems }) => {
                                         value={endDate}
                                         onChange={(e) => {
                                             setEndDate(e.target.value);
-                                            setSuccessMessage(''); // Clear the success message when new input is given
+                                            setSuccessMessage('');
                                         }}
                                     />
                                 </label>

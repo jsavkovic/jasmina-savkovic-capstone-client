@@ -10,8 +10,6 @@ import EditPage from './pages/EditPage';
 import UploadPage from './pages/UploadPage';
 import LoanedItemsPage from './pages/LoanedItemsPage';
 import BorrowedItemsPage from './pages/BorrowedItemsPage';
-import ArchivedItemsPage from './pages/ArchivedItemsPage';
-import Notifications from './pages/Notifications';
 import { UserProvider } from './context/UserContext';
 import { Container } from '@mui/material';
 
@@ -32,12 +30,10 @@ function App() {
             <Route path='/users/:userId/items' element={<ItemsPage />} />
             <Route path='/users/:userId/loaned' element={<LoanedItemsPage />} />
             <Route path='/users/:userId/borrowed' element={<BorrowedItemsPage />} />
-            <Route path='/users/:userId/archived' element={<ArchivedItemsPage />} />
             <Route path='/users/:userId/upload' element={<UploadPage />} />
             <Route path='/items/:itemId' element={<ItemDetailsPage />} />
             <Route path='/items/:itemId/edit' element={<EditPage />} />
             <Route path='/users/:userId/friends' element={<Friends />} />
-            <Route path='/users/:userId/notifications' element={<Notifications />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

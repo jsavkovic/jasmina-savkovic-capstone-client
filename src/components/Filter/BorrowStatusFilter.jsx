@@ -42,20 +42,20 @@ export default BorrowStatusFilter;
 
 const StyledStepper = styled(Stepper)(({ theme }) => ({
     '& .MuiStepLabel-label': {
-        color: '#003366', // dark blue font
+        color: '#003366',
         '&.Mui-active': {
-            color: '#003366', // dark blue font
+            color: '#003366',
         },
         '&.Mui-completed': {
-            color: '#003366', // dark blue font
+            color: '#003366',
         },
     },
 }));
 
 const CustomStepIcon = styled('div')(({ theme, ownerState }) => ({
-    backgroundColor: '#FFC0CB', // pink circles
+    backgroundColor: '#FFC0CB',
     zIndex: 1,
-    color: '#003366', // dark blue font
+    color: '#003366',
     width: 24,
     height: 24,
     display: 'flex',
@@ -63,9 +63,9 @@ const CustomStepIcon = styled('div')(({ theme, ownerState }) => ({
     justifyContent: 'center',
     alignItems: 'center',
     '&.Mui-active': {
-        backgroundColor: '#FFC0CB', // pink circles
+        backgroundColor: '#FFC0CB',
     },
     '&.Mui-completed': {
-        backgroundColor: '#FFC0CB', // pink circles
+        backgroundColor: '#FFC0CB',
     },
 }));

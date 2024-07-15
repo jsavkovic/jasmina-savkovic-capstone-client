@@ -5,7 +5,6 @@ import Header from '../components/Header/Header';
 import ItemsList from '../components/ItemsList/ItemsList';
 import ArchivedItems from '../components/ArchivedItems/ArchivedItems';
 import Footer from '../components/Footer/Footer';
-import './ItemsPage.scss';
 import { useUser } from '../context/UserContext';
 
 const ItemsPage = () => {

@@ -1,160 +1,145 @@
-@use "../../styles/partials/variables" as *;
-@use "../../styles/partials/mixins" as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
 
 .borrowed-items {
-    padding: 2rem;
+  padding: 2rem;
 
-    &__icons {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 1rem;
+  &__icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    padding: 1rem 0;
+    font-size: 1.5rem;
+  }
+
+  &__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+
+    @include small {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    &__title {
-        padding: 1rem 0;
-        font-size: 1.5rem;
+    @include tablet {
+      grid-template-columns: repeat(3, 1fr);
     }
 
-    &__grid {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: 1fr; 
+    @include desktop {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
 
-        @include small {
-            grid-template-columns: repeat(2, 1fr); 
-        }
+  &__card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.186);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: inherit;
 
-        @include tablet {
-            grid-template-columns: repeat(3, 1fr); 
-        }
-
-        @include desktop {
-            grid-template-columns: repeat(4, 1fr); 
-        }
+    &:hover {
+      transform: translateY(-0.5rem);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
-    &__card {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.186);
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.3s, box-shadow 0.3s;
-        text-decoration: none;
-        color: inherit;
-
-        &:hover {
-            transform: translateY(-0.5rem);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        &--overdue {
-            border: 1px solid #ec2020;
-            // background-color: #f7eded;
-            // color: red;
-        }
-        
-        &--today {
-            border: 1px solid #f4a208;
-            // background-color: #fff4e6;
-            // color: orange;
-        }
-        
-        &--soon {
-            border: 1px solid #ffff00;
-            // background-color: #fffbe6;
-        }
-
-        &--pickup {
-            border: 2px solid  $light-green;
-        }
-        
+    &--overdue {
+      border: 1px solid #ec2020;
     }
 
-    &__image {
-        width: 40%;
-        height: auto;
-        object-fit: cover;
-        border-radius: 0.5rem;
-        margin-bottom: 1rem;
-
-        @include small {
-            width: 60%;
-        }
-
-        @include tablet {
-            width: 80%;
-        }
+    &--today {
+      border: 1px solid #f4a208;
     }
 
-    &__details {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
+    &--soon {
+      border: 1px solid #ffff00;
     }
 
-    &__info {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        font-size: .8rem;
+    &--pickup {
+      border: 2px solid $light-green;
     }
-    &__duedate {
-        text-align: center;
-        font-weight: bold;
-        border: 1px solid $light-grey;
-        border-radius: .625rem;
-        padding: 0.25rem;
-        margin-bottom: 0.25rem;
+  }
 
+  &__image {
+    width: 40%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
 
-        &--overdue {
-            border: 2px solid red;
-            // background-color: #f7eded;
-            // color: red;
-        }
-        
-        &--today {
-            border: 2px solid orange;
-            // background-color: #fff4e6;
-            // color: orange;
-        }
-        
-        &--soon {
-            border: 2px solid yellow;
-            // background-color: #fffbe6;
-        }
+    @include small {
+      width: 60%;
     }
 
-    &__pickup {
-        text-align: center;
-        font-weight: bold;
-        border: 1px solid $light-green;
-        border-radius: .625rem;
-        padding: 0.25rem;
-        margin-bottom: 0.25rem;
+    @include tablet {
+      width: 80%;
+    }
+  }
 
-        
+  &__details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+  }
+  &__duedate {
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid $light-grey;
+    border-radius: 0.625rem;
+    padding: 0.25rem;
+    margin-bottom: 0.25rem;
+
+    &--overdue {
+      border: 2px solid red;
     }
 
-    &__cancel-button {
-        padding: 0.5rem 1rem;
-        background-color: $dark-blue;
-        color: #fff;
-        border: none;
-        border-radius: 3.125rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        max-width: 20rem;
-
-        &:hover {
-            background-color: $light-pink;
-            color: $dark-blue;
-        }
+    &--today {
+      border: 2px solid orange;
     }
+
+    &--soon {
+      border: 2px solid yellow;
+    }
+  }
+
+  &__pickup {
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid $light-green;
+    border-radius: 0.625rem;
+    padding: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  &__cancel-button {
+    padding: 0.5rem 1rem;
+    background-color: $dark-blue;
+    color: #fff;
+    border: none;
+    border-radius: 3.125rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    max-width: 20rem;
+
+    &:hover {
+      background-color: $light-pink;
+      color: $dark-blue;
+    }
+  }
 }
-
