@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './BorrowedItems.scss';
 import { useUser } from '../../context/UserContext';
 import BackButton from '../../components/BackButton/BackButton';
+import Legend from '../Legend/Legend';
 
 const BorrowedItems = () => {
     const { userId } = useUser();
@@ -115,6 +116,7 @@ const BorrowedItems = () => {
         <section className='borrowed-items'>
             <div className='borrowed-items__icons'>
                 <BackButton to={-1} />
+                <Legend />
             </div>
             <h1 className='borrowed-items__title'>Borrowed Items</h1>
             <div className='borrowed-items__grid'>
