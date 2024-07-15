@@ -128,6 +128,8 @@ const ItemDetails = ({ item, refreshItems }) => {
         return new Date(date).toLocaleDateString();
     };
 
+
+
     return (
         <section className='item-details'>
             <div className='item-details__header'>

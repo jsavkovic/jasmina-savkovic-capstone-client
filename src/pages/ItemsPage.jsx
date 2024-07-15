@@ -2,10 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../components/Header/Header';
-import Filter from '../components/Filter/Filter';
-// import BorrowStatusFilter from '../components/Filter/BorrowStatusFilter';
 import ItemsList from '../components/ItemsList/ItemsList';
-import ArchivedItems from '../components/ArchivedItems/ArchivedItems'
+import ArchivedItems from '../components/ArchivedItems/ArchivedItems';
 import Footer from '../components/Footer/Footer';
 import './ItemsPage.scss';
 import { useUser } from '../context/UserContext';
@@ -18,7 +16,6 @@ const ItemsPage = () => {
     const [error, setError] = useState(null);
     const [itemTypes, setItemTypes] = useState([]);
     const [userName, setUserName] = useState('');
-    // const [selectedType, setSelectedType] = useState('');
     const [filters, setFilters] = useState({ type: '' });
     const API_URL = import.meta.env.VITE_API_URL;
 
@@ -97,42 +94,18 @@ const ItemsPage = () => {
         }));
     };
 
-    // const fetchBorrowRequests = async (statusId) => {
-    //     try {
-    //         const response = await axios.get(`${API_URL}/borrow-requests/lender/${loggedInUserId}`, {
-    //             params: {
-    //                 borrow_status_id: statusId
-    //             }
-    //         });
-    //         setActiveItems(response.data);
-    //     } catch (err) {
-    //         console.error('Error fetching borrow requests:', err.message, err.stack);
-    //         setError('Failed to fetch borrow requests');
-    //     }
-    // };
-
     return (
         <>
             <Header />
             <main>
-                <div className='items__header'>
-                    <h1 className='items__title'>{selectedUserId === loggedInUserId ? 'My Items' : `${userName}'s Items`}</h1>
-                    {itemTypes.length > 0 && (
-                        <Filter itemTypes={itemTypes} onFilterChange={handleFilterChange} />
-                    )}
-                </div>
-                {/* <div>
-                    <BorrowStatusFilter onFilterChange={(statusId) => fetchBorrowRequests(statusId)} />
-                </div> */}
-                {/* <div className="items__filter">
-                    <Filter itemTypes={itemTypes} onFilterChange={handleFilterChange} />
-                </div> */}
                 <ItemsList
                     items={activeItems}
                     error={error}
                     userName={userName}
                     selectedUserId={selectedUserId}
                     loggedInUserId={loggedInUserId}
+                    itemTypes={itemTypes}
+                    onFilterChange={handleFilterChange}
                 />
                 <ArchivedItems items={inactiveItems} API_URL={API_URL} />
             </main>

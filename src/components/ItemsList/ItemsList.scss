@@ -4,7 +4,45 @@
 .items-list {
     &__title {
         font-size: 2.5rem;
+        // color: $alternate-light-grey;
     }
+
+        &__filter {
+        display: flex;
+        justify-content: flex-end;
+        // margin: 1rem;
+        }
+        
+        &__header {
+            display: flex;
+            // flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 1rem;
+            color: $dark-blue;
+            padding: 1rem;
+            position: relative;
+
+            
+            }
+        
+        
+            &__add-button {
+                padding: 0.5rem 1rem;
+                border-radius: 3.125rem;
+                background-color: $dark-blue;
+                color: white;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background-color 0.3s ease, color 0.3s ease;
+                height: 2.5rem;
+        
+                &:hover {
+                    background-color: $light-pink;
+                    color: $dark-blue;
+                }
+            }
+
 
     &__container {
         position: relative;
@@ -22,14 +60,6 @@
         }
     }
 
-    &__hero {
-        width: 100%;
-        height: auto;
-        display: block;
-        max-width: 100%;
-        object-fit: cover;
-        overflow: hidden;
-    }
 
     &__grid {
     background-color: white;
@@ -42,6 +72,8 @@
     margin: 1rem;
     // max-height: 50rem;
     // overflow: scroll;
+    position: relative;
+    
 
     @include small {
         justify-content: flex-start;
@@ -129,4 +161,5 @@
         height: 100%;
         object-fit: cover;
     }
+
 }
