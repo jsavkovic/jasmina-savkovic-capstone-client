@@ -179,27 +179,26 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.3s ease, color 0.3s ease;
-            margin: .4rem;
-
+            margin: 0.4rem;
+    
             @include tablet {
                 margin: 0;
                 width: 30%;
                 max-width: 18rem;
             }
-
+    
             &:hover {
                 background-color: $alternate-light-grey;
             }
-
-            &:active {
-                transform: translateY(2px);
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            &:disabled {
-                cursor: not-allowed;
-                opacity: 0.5;
-            }
         }
+    
+        &__error {
+            color: red;
+        }
+    
+        &__success {
+            color: green;
+        }
+
     }
 }

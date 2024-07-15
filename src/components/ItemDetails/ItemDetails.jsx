@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import BackButton from '../BackButton/BackButton'
-import EditButton from '../EditButton/EditButton'
-import DeleteButton from '../DeleteButton/DeleteButton'
+import BackButton from '../BackButton/BackButton';
+import EditButton from '../EditButton/EditButton';
+import DeleteButton from '../DeleteButton/DeleteButton';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import ListSwitch from '../ListSwitch/ListSwitch';
 
@@ -19,23 +19,24 @@ const ItemDetails = ({ item, refreshItems }) => {
     const [endDate, setEndDate] = useState('');
     const [dateError, setDateError] = useState('');
     const [requestError, setRequestError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
 
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        const fetchBorrowRequests = async () => {
-            try {
-                const response = await axios.get(`${API_URL}/borrow-requests/item/${item.id}`);
-                setBorrowRequests(response.data);
-            } catch (err) {
-                console.error('Error fetching borrow requests:', err);
-                setRequestError('Failed to fetch borrow requests.');
-            }
-        };
-
         fetchBorrowRequests();
     }, [item.id, API_URL]);
+
+    const fetchBorrowRequests = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/borrow-requests/item/${item.id}`);
+            setBorrowRequests(response.data);
+        } catch (err) {
+            console.error('Error fetching borrow requests:', err);
+            setRequestError('Failed to fetch borrow requests.');
+        }
+    };
 
     const handleDelete = async () => {
         try {
@@ -64,7 +65,6 @@ const ItemDetails = ({ item, refreshItems }) => {
         }
     };
 
-
     const validateDates = () => {
         if (!startDate || !endDate) {
             setDateError('Both start date and end date are required.');
@@ -73,6 +73,13 @@ const ItemDetails = ({ item, refreshItems }) => {
 
         const start = new Date(startDate);
         const end = new Date(endDate);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (start < today || end < today) {
+            setDateError('Start date and end date must be today or later.');
+            return false;
+        }
 
         if (start >= end) {
             setDateError('End date must be after start date.');
@@ -83,8 +90,9 @@ const ItemDetails = ({ item, refreshItems }) => {
         return true;
     };
 
-
     const handleRequest = async () => {
+        setSuccessMessage('');
+
         if (!validateDates()) {
             return;
         }
@@ -99,9 +107,13 @@ const ItemDetails = ({ item, refreshItems }) => {
                 borrow_status_id: 1,
             };
 
+            console.log('Creating borrow request with data:', borrowRequest);
+
             await axios.post(`${API_URL}/borrow-requests`, borrowRequest);
             console.log('Borrow request created');
             setRequestError('');
+            setSuccessMessage('Borrow request created successfully.');
+            fetchBorrowRequests(); // Refresh borrow requests after successful creation
         } catch (err) {
             console.error('Error creating borrow request:', err);
             if (err.response && err.response.data && err.response.data.error) {
@@ -180,7 +192,10 @@ const ItemDetails = ({ item, refreshItems }) => {
                             <input
                                 type='date'
                                 value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
+                                onChange={(e) => {
+                                    setStartDate(e.target.value);
+                                    setSuccessMessage(''); // Clear the success message when new input is given
+                                }}
                             />
                         </label>
                         <label>
@@ -188,29 +203,23 @@ const ItemDetails = ({ item, refreshItems }) => {
                             <input
                                 type='date'
                                 value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
+                                onChange={(e) => {
+                                    setEndDate(e.target.value);
+                                    setSuccessMessage(''); // Clear the success message when new input is given
+                                }}
                             />
                         </label>
                         {dateError && <p className='item-details__error'>{dateError}</p>}
                         {requestError && <p className='item-details__error'>{requestError}</p>}
+                        {successMessage && <p className='item-details__success'>{successMessage}</p>}
                         <button onClick={handleRequest} className='item-details__button'>
                             Submit Request
                         </button>
                     </div>
                 )}
-                {/* <p className={`item-details__status item-details__status--${itemStatus === 'Listed' ? 'green' : 'grey'}`}>
-                    Item status: {itemStatus}
-                </p> */}
                 {userId === item.user_id && (
                     <ListSwitch isChecked={itemStatus === 'Listed'} onSwitchChange={toggleStatus} />
                 )}
-                {/* <button
-                    onClick={toggleStatus}
-                    disabled={isUpdating}
-                    className='item-details__button'
-                >
-                    {itemStatus === 'Listed' ? 'Archive Item' : 'List Item'}
-                </button> */}
             </div>
         </section>
     );
