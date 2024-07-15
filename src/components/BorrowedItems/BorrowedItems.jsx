@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './BorrowedItems.scss';
+import Legend from '../Legend/Legend';
 import { useUser } from '../../context/UserContext';
 import BackButton from '../../components/BackButton/BackButton';
 
@@ -125,6 +126,7 @@ const BorrowedItems = () => {
         <section className='borrowed-items'>
             <div className='borrowed-items__icons'>
                 <BackButton to={-1} />
+                <Legend />
             </div>
             <h1 className='borrowed-items__title'>Borrowed Items</h1>
             <div className='borrowed-items__grid'>

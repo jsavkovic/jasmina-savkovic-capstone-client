@@ -7,7 +7,7 @@
     &__icons {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 1rem;
     }
 
@@ -38,7 +38,7 @@
         background-color: #fff;
         border: 1px solid #ddd;
         border-radius: 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.267);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.186);
         padding: 1rem;
         display: flex;
         flex-direction: column;
@@ -52,19 +52,19 @@
         }
 
         &--overdue {
-            border: 2px solid red;
+            border: 2px solid #ec2020;
             // background-color: #f7eded;
             // color: red;
         }
         
         &--today {
-            border: 2px solid orange;
+            border: 2px solid #f4a208;
             // background-color: #fff4e6;
             // color: orange;
         }
         
         &--soon {
-            border: 2px solid yellow;
+            border: 2px solid #ffff00;
             // background-color: #fffbe6;
         }
 

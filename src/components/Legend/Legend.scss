@@ -1,0 +1,60 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.legend {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    // margin-bottom: 2rem;
+
+    &__title {
+        font-size: .9rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        margin: 0.25rem 0.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &--pickup .legend__color {
+            background-color: $light-green;
+        }
+
+        &--soon .legend__color {
+            background-color: rgb(255, 255, 0);
+        }
+
+        &--today .legend__color {
+            background-color: #f4a208;
+        }
+
+        &--overdue .legend__color {
+            background-color: #ec2020;
+        }
+    }
+
+    &__color {
+        width: 15px;
+        height: 15px;
+        border-radius: 0.25rem;
+        margin-right: 0.5rem;
+    }
+
+    &__text {
+        font-size: .8rem;
+    }
+}

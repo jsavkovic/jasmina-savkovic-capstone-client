@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import BorrowedItems from '../components/BorrowedItems/BorrowedItems';
-import BorrowRequests from '../components/BorrowRequests/BorrowRequests';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import './BorrowedItemsPage.scss';
