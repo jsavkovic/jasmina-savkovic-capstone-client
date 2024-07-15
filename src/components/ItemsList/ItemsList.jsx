@@ -34,7 +34,9 @@ const ItemsList = ({
                     items.map(item => (
                         <article key={item.id} className="items-list__item">
                             <Link to={`/items/${item.id}`}>
-                                <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="items-list__image" />
+                                <div className='items-list__image'>
+                                    <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} />
+                                </div>
                                 <h3 className="items-list__name">{item.name}</h3>
                             </Link>
                         </article>

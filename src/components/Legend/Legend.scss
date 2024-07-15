@@ -6,7 +6,12 @@
     background-color: #f9f9f9;
     border-radius: 0.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    // margin-bottom: 2rem;
+    // display: flex;
+    // justify-content: space-around;
+    // background: white;
+    // padding: 10px;
+    // border-radius: 10px;
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
     &__title {
         font-size: .9rem;
@@ -37,19 +42,23 @@
         }
 
         &--pickup .legend__color {
-            background-color: $light-green;
+            // background-color: $light-green;
+            background-color: #d4edda;
         }
 
         &--soon .legend__color {
-            background-color: #ffff00;
+            // background-color: #ffff00;
+            background-color: #ffeeba;
         }
 
         &--today .legend__color {
-            background-color: #f4a208;
+            // background-color: #f4a208;
+            background-color: #f8d7da;
         }
 
         &--overdue .legend__color {
-            background-color: #ec2020;
+            // background-color: #ec2020;
+            background-color: #f5c6cb;
         }
     }
 
