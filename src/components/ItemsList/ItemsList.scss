@@ -17,7 +17,7 @@
             align-items: center;
             padding-left: 1rem;
             color: $dark-blue;
-            padding: 1rem;
+            padding: 1rem 2rem;
             position: relative;
 
             
@@ -25,7 +25,7 @@
         
         
             &__add-button {
-                background-color: #a8e6cf; 
+                background-color: #a0c4ff; 
                 color: #333; 
                 border: none;
                 padding: 10px 20px;
@@ -35,11 +35,13 @@
                 font-family: 'Comic Sans MS', cursive, sans-serif; 
 
                 &:hover {
-  background-color: #85d7b4; 
-  transform: translateY(-3px);
+                    background-color: #85d7b4; 
+                    transform: translateY(-3px);
+                }
 
+                &a {
+                    text-decoration: none;
 
-  
                 }
             }
 
@@ -78,7 +80,7 @@
     }
 
     &__error {
-        
+       color: red; 
     }
 
     &__item {
