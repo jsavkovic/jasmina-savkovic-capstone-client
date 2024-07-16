@@ -10,6 +10,15 @@ import CancelButton from '../CancelButton/CancelButton';
 const BorrowedItems = () => {
     const { userId } = useUser();
     const [borrowedItems, setBorrowedItems] = useState([]);
+    const [filters, setFilters] = useState({
+        borrowedSoon: false,
+        borrowedToday: false,
+        borrowedOverdue: false,
+        accepted: false,
+        pending: false,
+        returned: false,
+        declined: false
+    });
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -93,7 +102,25 @@ const BorrowedItems = () => {
         }
     };
 
-    const sortedBorrowedItems = borrowedItems.slice().sort((a, b) => {
+    const isAnyFilterSelected = Object.values(filters).some(filter => filter);
+
+    const filteredBorrowedItems = borrowedItems.filter(item => {
+        if (!isAnyFilterSelected) return true;
+
+        const daysUntilDue = getDaysUntilDue(item.end_date);
+        const daysUntilPickup = getDaysUntilPickup(item.start_date);
+
+        if (filters.borrowedSoon && item.borrow_status_id === 3 && daysUntilDue <= 2 && daysUntilDue > 0) return true;
+        if (filters.borrowedToday && item.borrow_status_id === 3 && daysUntilDue === 0) return true;
+        if (filters.borrowedOverdue && item.borrow_status_id === 3 && daysUntilDue < 0) return true;
+        if (filters.accepted && item.borrow_status_id === 2) return true;
+        if (filters.pending && item.borrow_status_id === 1) return true;
+        if (filters.returned && item.borrow_status_id === 4) return true;
+        if (filters.declined && item.borrow_status_id === 5) return true;
+        return false;
+    });
+
+    const sortedBorrowedItems = filteredBorrowedItems.slice().sort((a, b) => {
         const statusOrderDiff =
             getStatusOrder(a.borrow_status_id) - getStatusOrder(b.borrow_status_id);
         if (statusOrderDiff !== 0) return statusOrderDiff;
@@ -118,7 +145,7 @@ const BorrowedItems = () => {
         <section className='borrowed-items'>
             <div className='borrowed-items__icons'>
                 <BackButton to={-1} />
-                <Legend />
+                <Legend filters={filters} setFilters={setFilters} />
             </div>
             <h1 className='borrowed-items__title'>Borrowed Items</h1>
             <div className='borrowed-items__grid'>
@@ -200,7 +227,6 @@ const BorrowedItems = () => {
                                         >
                                             Cancel Request
                                         </button>
-
                                     )}
                                 </div>
                             </div>
