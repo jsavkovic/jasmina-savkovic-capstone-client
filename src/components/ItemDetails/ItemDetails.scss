@@ -1,254 +1,119 @@
-@use "../../styles/partials/variables" as *;
-@use "../../styles/partials/mixins" as *;
-
 .item-details {
-    margin: 2rem;
     display: flex;
-    flex-direction: column;
-    color: $dark-blue;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 1rem 0.5rem;
-    border-radius: .625rem;
-    margin: 1rem;
-    background-color: white;
-
-    &__header {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-
-        @include tablet {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem;
-        }
-    }
-
-    &__icons {
-        width: 100%;
-        display: flex;
-
-        & img {
-            margin: 0 1rem;
-        }
-
-        &--right {
-            width: 100%;
-            display: flex;
-            justify-content: flex-end;
-
-            & img {
-                margin: 0 1rem;
-            }
-        }
-    }
-
-    &__title {
-        font-size: 2rem;
-        margin: 2rem 0;
-    }
-
+    flex-wrap: wrap;
 
     &__content {
         display: flex;
         flex-direction: column;
+        flex: 1;
+        padding: 2rem;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__icons {
+        display: flex;
+        justify-content: space-between;
         width: 100%;
 
-        @include tablet {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: flex-start;
+        &--right {
+            display: flex;
+            gap: 0.5rem;
+
+            button, .icon-button {
+                width: 2rem; 
+                height: 2rem; 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: transparent; 
+                border: none; 
+                cursor: pointer;
+                padding: 0; 
+            }
+
+            svg {
+                width: 1.5rem; 
+                height: 1.5rem; 
+            }
         }
     }
 
     &__main {
-        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-top: 1rem;
     }
 
-    &__aside {
-        flex: 0 1 300px;
-        border: 1px solid #ddd;
-        border-radius: 0.5rem;
-        padding: 1rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        background-color: $alternate-light-grey;
-
-        & h3 {
-            margin-bottom: 1rem;
-        }
-
-        & .borrow-request {
-            padding: 0.5rem;
-            border-bottom: 1px solid $light-pink;
-            text-decoration: none;
-            color: inherit;
-
-            // &:hover {
-            //    background-color: darken($alternate-light-grey, 10%);
-            //     text-decoration: none; 
-            // }
-
-            &:last-child {
-                border-bottom: none;
-            }
-        }
+    &__title {
+        font-size: 2rem;
+        margin: 1rem 0;
     }
 
     &__image {
-        width: 60%;
-        height: auto;
-        border: 2px solid $light-pink;
-        border-radius: .625rem;
-        max-width: 31.25rem;
+        width: 100%;
+        max-width: 300px;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
     }
 
     &__description {
-        padding: 2rem;
-        max-width: 31.25rem;
-        text-align: center;
+        margin-bottom: 1rem;
     }
 
     &__details {
-        padding: 1rem;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 31.25rem;
-        font-weight: 600;
-        font-size: 0.9rem;
         margin-bottom: 1rem;
-
-        @include tablet {
-            flex-direction: row;
-            justify-content: space-between;
-            font-size: 1rem;
-        }
-    }
-
-    &__category {}
-
-    &__owner {
-        a {
-            text-decoration: none;
-            color: inherit;
-
-            &:hover {
-                text-decoration: underline;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-        }
-    }
-
-    &__request-status {
-        margin: 1rem;
-        padding: 1rem;
-        width: 100%;
-        max-width: 31.25rem;
-        border: 1px solid $light-pink;
-        border-radius: .625rem;
-        background-color: $alternate-light-grey;
-
-        & h3 {
-            margin-bottom: 1rem;
-        }
-
-        & .borrow-request {
-            padding: 0.5rem;
-            border-bottom: 1px solid $light-pink;
-
-            &:last-child {
-                border-bottom: none;
-            }
-        }
     }
 
     &__bottom {
-        width: 100%;
-        align-items: center;
-        justify-content: flex-end;
-
-        @include tablet {
-            display: flex;
-        }
-    }
-
-    &__status {
-        width: 20%;
-        height: 2.5rem;
-        border-radius: 3.125rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease, box-shadow 0.1s ease;
-
-        &--green {
-            background-color: $light-green;
-        }
-
-        &--grey {
-            background-color: grey;
-            color: $alternate-light-grey;
-        }
+        margin-top: 1rem;
     }
 
     &__request {
         display: flex;
         flex-direction: column;
-        width: 100%;
-        align-items: center;
-        margin-bottom: 1rem;
+        align-items: flex-start;
 
-        & label {
-            margin: 0.5rem 0;
+        & input {
+            margin-left: 0.5rem;
         }
 
-        &__error {
-            color: red;
-            font-size: 0.8rem;
+        & label {
             margin-bottom: 0.5rem;
         }
 
-        &__button {
-            padding: 0.5rem;
-            border-radius: 3.125rem;
-            width: 25%;
-            background-color: white;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 12px rgba(0, 0, 0, 0.1);
-            color: $dark-blue;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.3s ease, color 0.3s ease;
-            margin: 0.4rem;
-
-            @include tablet {
-                margin: 0;
-                width: 30%;
-                max-width: 18rem;
-            }
-
-            &:hover {
-                background-color: $alternate-light-grey;
-            }
-        }
-
-        &__error {
+        &__error,
+        &__success {
+            margin-top: 0.5rem;
             color: red;
         }
+    }
 
-        &__success {
-            color: green;
-        }
+    &__button {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+    &__aside {
+        flex-basis: 400px; 
+        margin-left: 1rem;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+    }
+
+    .borrow-request {
+        text-decoration: none; 
+        color: inherit;
     }
 }

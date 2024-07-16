@@ -1,12 +1,11 @@
-import "./Footer.scss";
+import './Footer.scss'
 
 const Footer = () => {
     return (
-        <footer className="footer">
+        <footer className='footer'>
             <p>© Lendaroo. All Rights Reserved.</p>
         </footer>
-    );
-};
+    )
+}
 
-export default Footer;
-
+export default Footer

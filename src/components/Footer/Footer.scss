@@ -1,8 +1,8 @@
-@use "../../styles/partials/variables" as *;
-@use "../../styles/partials/mixins" as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
 
 .footer {
-  font-size: .85rem;
+  font-size: 0.85rem;
   display: flex;
   justify-content: center;
   align-items: center;
