@@ -87,7 +87,7 @@ const UploadItemForm = () => {
             const url = `${API_URL}/items`;
             try {
                 await submitData(formValues, url);
-                navigate(`/users/${userId}/items`);
+                navigate(`/items`);
                 window.scrollTo(0, 0);
             } catch (err) {
                 console.error('Error uploading item:', err);

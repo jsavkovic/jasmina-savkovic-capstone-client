@@ -5,7 +5,6 @@ import Filter from '../Filter/Filter';
 const ItemsList = ({
     items,
     error,
-    loggedInUserId,
     userName,
     friendId,
     itemTypes,
@@ -19,13 +18,15 @@ const ItemsList = ({
                 <h1 className="items-list__title">
                     {friendId ? `${userName}'s Items` : 'My Items'}
                 </h1>
+                {itemTypes.length > 0 && (
+                    <Filter itemTypes={itemTypes} onFilterChange={onFilterChange} />
+                )}
+            </div>
+            <div className='items-list__button-row'>
                 {!friendId && (
                     <Link to="/upload" className="items-list__add-button">
                         Add New Item
                     </Link>
-                )}
-                {itemTypes.length > 0 && (
-                    <Filter itemTypes={itemTypes} onFilterChange={onFilterChange} />
                 )}
             </div>
             <div className="items-list__grid">
