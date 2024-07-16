@@ -8,6 +8,7 @@ import EditButton from '../EditButton/EditButton';
 import DeleteButton from '../DeleteButton/DeleteButton';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import ListSwitch from '../ListSwitch/ListSwitch';
+import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
 const ItemDetails = ({ item, refreshItems }) => {
     const { userId } = useUser();
@@ -15,8 +16,7 @@ const ItemDetails = ({ item, refreshItems }) => {
     const [borrowRequests, setBorrowRequests] = useState([]);
     const [isUpdating, setIsUpdating] = useState(false);
     const [isModalActive, setIsModalActive] = useState(false);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [dateRange, setDateRange] = useState([null, null]);
     const [dateError, setDateError] = useState('');
     const [requestError, setRequestError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -30,9 +30,7 @@ const ItemDetails = ({ item, refreshItems }) => {
 
     const fetchBorrowRequests = async () => {
         try {
-            const response = await axios.get(
-                `${API_URL}/borrow-requests/item/${item.id}`
-            );
+            const response = await axios.get(`${API_URL}/borrow-requests/item/${item.id}`);
             setBorrowRequests(response.data);
         } catch (err) {
             console.error('Error fetching borrow requests:', err);
@@ -57,9 +55,7 @@ const ItemDetails = ({ item, refreshItems }) => {
         const newStatus = isChecked ? 'Listed' : 'Inactive';
 
         try {
-            await axios.put(`${API_URL}/items/${item.id}/status`, {
-                status_id: newStatusId
-            });
+            await axios.put(`${API_URL}/items/${item.id}/status`, { status_id: newStatusId });
             setItemStatus(newStatus);
             item.status_id = newStatusId;
             setIsUpdating(false);
@@ -70,6 +66,7 @@ const ItemDetails = ({ item, refreshItems }) => {
     };
 
     const validateDates = () => {
+        const [startDate, endDate] = dateRange;
         if (!startDate || !endDate) {
             setDateError('Both start date and end date are required.');
             return false;
@@ -101,6 +98,8 @@ const ItemDetails = ({ item, refreshItems }) => {
             return;
         }
 
+        const [startDate, endDate] = dateRange;
+
         try {
             const borrowRequest = {
                 borrower_id: userId,
@@ -120,6 +119,7 @@ const ItemDetails = ({ item, refreshItems }) => {
             fetchBorrowRequests();
         } catch (err) {
             console.error('Error creating borrow request:', err);
+            console.error(err.response?.data);
             if (err.response && err.response.data && err.response.data.error) {
                 setRequestError(err.response.data.error);
             } else {
@@ -178,28 +178,13 @@ const ItemDetails = ({ item, refreshItems }) => {
                     <div className='item-details__bottom'>
                         {userId !== item.user_id && (
                             <div className='item-details__request'>
-                                <label>
-                                    Start Date:
-                                    <input
-                                        type='date'
-                                        value={startDate}
-                                        onChange={e => {
-                                            setStartDate(e.target.value);
-                                            setSuccessMessage('');
-                                        }}
-                                    />
-                                </label>
-                                <label>
-                                    End Date:
-                                    <input
-                                        type='date'
-                                        value={endDate}
-                                        onChange={e => {
-                                            setEndDate(e.target.value);
-                                            setSuccessMessage('');
-                                        }}
-                                    />
-                                </label>
+                                <DateRangePicker
+                                    value={dateRange}
+                                    onChange={(newValue) => {
+                                        setDateRange(newValue);
+                                        setSuccessMessage('');
+                                    }}
+                                />
                                 {dateError && (
                                     <p className='item-details__error'>{dateError}</p>
                                 )}
@@ -264,4 +249,3 @@ const ItemDetails = ({ item, refreshItems }) => {
 };
 
 export default ItemDetails;
-

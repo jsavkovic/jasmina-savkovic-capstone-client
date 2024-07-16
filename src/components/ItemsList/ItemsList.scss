@@ -87,7 +87,7 @@
     background-color: white;
     color: $dark-blue;
     border-radius: 0.625rem;
-    margin: 1rem;
+    margin: 2rem 1rem;
 
     @include small {
       grid-template-columns: repeat(2, 1fr);

@@ -38,11 +38,12 @@
     &__title {
         font-size: 3rem;
         font-weight: bold;
-        color: $alternate-light-grey;
-        // background: linear-gradient(to right, #a0c4ff, #ffc8dd);
-        // -webkit-background-clip: text;
-        // -webkit-text-fill-color: transparent;
-        // background-clip: text;
+        // color: $alternate-light-grey;
+        // color: #FFCAD4;
+        background: linear-gradient(to right, #FFCAD4, #f2f1f1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
 
         &--link {
             text-decoration: none;
