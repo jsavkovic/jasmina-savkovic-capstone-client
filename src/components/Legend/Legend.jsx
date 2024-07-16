@@ -27,6 +27,10 @@ const Legend = ({ filters, setFilters }) => {
                     <span className="legend__color legend__color--overdue"></span> Overdue
                 </div>
                 <div className="legend__item">
+                    <input className='legend__input' type="checkbox" name="borrowed" checked={filters.borrowed} onChange={handleCheckboxChange} />
+                    <span className="legend__color legend__color--borrowed"></span> Borrowed
+                </div>
+                <div className="legend__item">
                     <input className='legend__input' type="checkbox" name="accepted" checked={filters.accepted} onChange={handleCheckboxChange} />
                     <span className="legend__color legend__color--accepted"></span> Accepted
                 </div>

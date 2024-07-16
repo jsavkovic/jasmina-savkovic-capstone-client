@@ -11,7 +11,7 @@
   padding: 1rem 0.5rem;
   border-radius: 0.625rem;
   background-color: white;
-  max-height: 52rem;
+//   max-height: 52rem;
 
   &__icons {
     width: 100%;
@@ -75,6 +75,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.1s ease, box-shadow 0.1s ease;
+    margin: 0 1rem;
 
     &:hover {
       background-color: darken($light-pink, 10%);

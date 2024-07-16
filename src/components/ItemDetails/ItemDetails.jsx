@@ -46,7 +46,7 @@ const ItemDetails = ({ item, refreshItems }) => {
             console.log('Item deleted');
             setIsModalActive(false);
             refreshItems();
-            navigate(`/users/${userId}/items`);
+            navigate(`/items`);
         } catch (error) {
             console.error('Error deleting item:', error);
         }
@@ -172,7 +172,7 @@ const ItemDetails = ({ item, refreshItems }) => {
                         <p className='item-details__category'>Category: {item.category}</p>
                         <p className='item-details__owner'>
                             Owner:{' '}
-                            <Link to={`/users/${item.user_id}/items`}>{item.owner}</Link>
+                            <Link to={`/${item.user_id}/items`}>{item.owner}</Link>
                         </p>
                     </div>
                     <div className='item-details__bottom'>
@@ -264,3 +264,4 @@ const ItemDetails = ({ item, refreshItems }) => {
 };
 
 export default ItemDetails;
+

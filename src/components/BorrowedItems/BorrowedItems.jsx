@@ -14,6 +14,7 @@ const BorrowedItems = () => {
         borrowedSoon: false,
         borrowedToday: false,
         borrowedOverdue: false,
+        borrowed: false,
         accepted: false,
         pending: false,
         returned: false,
@@ -113,6 +114,7 @@ const BorrowedItems = () => {
         if (filters.borrowedSoon && item.borrow_status_id === 3 && daysUntilDue <= 2 && daysUntilDue > 0) return true;
         if (filters.borrowedToday && item.borrow_status_id === 3 && daysUntilDue === 0) return true;
         if (filters.borrowedOverdue && item.borrow_status_id === 3 && daysUntilDue < 0) return true;
+        if (filters.borrowed && item.borrow_status_id === 3) return true;
         if (filters.accepted && item.borrow_status_id === 2) return true;
         if (filters.pending && item.borrow_status_id === 1) return true;
         if (filters.returned && item.borrow_status_id === 4) return true;
@@ -205,7 +207,11 @@ const BorrowedItems = () => {
                                                 item
                                             )}`}
                                         >
-                                            Due in {getDaysUntilDue(item.end_date)} days
+                                            {getDaysUntilDue(item.end_date) < 0
+                                                ? `Overdue by ${Math.abs(getDaysUntilDue(item.end_date))} days`
+                                                : getDaysUntilDue(item.end_date) === 0
+                                                    ? 'Due today'
+                                                    : `Due in ${getDaysUntilDue(item.end_date)} days`}
                                         </p>
                                     )}
                                     {item.borrow_status_id === 2 && (
@@ -214,19 +220,15 @@ const BorrowedItems = () => {
                                                 item
                                             )}`}
                                         >
-                                            Pick up in {getDaysUntilPickup(item.start_date)} days
+                                            {getDaysUntilPickup(item.start_date) === 0
+                                                ? 'Pick up today'
+                                                : `Pick up in ${getDaysUntilPickup(item.start_date)} days`}
                                         </p>
                                     )}
                                     {item.borrow_status_id === 1 && (
-                                        <button
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                cancelRequest(item.id);
-                                            }}
-                                            className='borrowed-items__cancel-button'
-                                        >
-                                            Cancel Request
-                                        </button>
+                                        <CancelButton
+                                            onClick={() => cancelRequest(item.id)}
+                                        />
                                     )}
                                 </div>
                             </div>

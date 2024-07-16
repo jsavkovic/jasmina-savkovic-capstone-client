@@ -9,6 +9,16 @@ import BackButton from '../../components/BackButton/BackButton';
 const LoanedItems = () => {
     const { userId } = useUser();
     const [loanedItems, setLoanedItems] = useState([]);
+    const [filters, setFilters] = useState({
+        borrowedSoon: false,
+        borrowedToday: false,
+        borrowedOverdue: false,
+        borrowed: false,
+        accepted: false,
+        pending: false,
+        returned: false,
+        declined: false
+    });
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -100,22 +110,32 @@ const LoanedItems = () => {
         }
     };
 
-    const sortedLoanedItems = loanedItems.slice().sort((a, b) => {
+    const isAnyFilterSelected = Object.values(filters).some(filter => filter);
+
+    const filteredLoanedItems = loanedItems.filter(item => {
+        if (!isAnyFilterSelected) return true;
+
+        const daysUntilDue = getDaysUntilDue(item.end_date);
+        const daysUntilPickup = getDaysUntilPickup(item.start_date);
+
+        if (filters.borrowedSoon && item.borrow_status_id === 3 && daysUntilDue <= 2 && daysUntilDue > 0) return true;
+        if (filters.borrowedToday && item.borrow_status_id === 3 && daysUntilDue === 0) return true;
+        if (filters.borrowedOverdue && item.borrow_status_id === 3 && daysUntilDue < 0) return true;
+        if (filters.borrowed && item.borrow_status_id === 3) return true;
+        if (filters.accepted && item.borrow_status_id === 2) return true;
+        if (filters.pending && item.borrow_status_id === 1) return true;
+        if (filters.returned && item.borrow_status_id === 4) return true;
+        if (filters.declined && item.borrow_status_id === 5) return true;
+        return false;
+    });
+
+    const sortedLoanedItems = filteredLoanedItems.slice().sort((a, b) => {
         const statusOrderDiff = getStatusOrder(a.borrow_status_id) - getStatusOrder(b.borrow_status_id);
         if (statusOrderDiff !== 0) return statusOrderDiff;
 
-        // If statuses are the same, sort by start date for pending items
-        if (a.borrow_status_id === 1 && b.borrow_status_id === 1) {
-            return new Date(a.start_date) - new Date(b.start_date);
-        }
-
-        // Sort by due date for borrowed items
-        if (a.borrow_status_id === 3 && b.borrow_status_id === 3) {
-            return new Date(a.end_date) - new Date(b.end_date);
-        }
-
-        // Default to sorting by start date for other statuses
-        return new Date(a.start_date) - new Date(b.start_date);
+        const aDueDate = new Date(a.end_date);
+        const bDueDate = new Date(b.end_date);
+        return aDueDate - bDueDate;
     });
 
     const getCardClassName = (item) => {
@@ -129,41 +149,27 @@ const LoanedItems = () => {
         return '';
     };
 
-    // const getCardClassName = (item) => {
-    //     if (item.borrow_status_id !== 3) return '';
-
-    //     const daysUntilDue = getDaysUntilDue(item.end_date);
-    //     if (daysUntilDue < 0) return '--overdue';
-    //     if (daysUntilDue === 0) return '--today';
-    //     if (daysUntilDue <= 2) return '--soon';
-    //     return '';
-    // };
-
     return (
         <section className='loaned-items'>
             <div className='loaned-items__icons'>
                 <BackButton to={-1} />
-                <Legend />
+                <Legend filters={filters} setFilters={setFilters} />
             </div>
             <h1 className='loaned-items__title'>Loaned Items</h1>
             <div className='loaned-items__grid'>
                 {sortedLoanedItems.length > 0 ? (
                     sortedLoanedItems.map(item => (
                         <Link to={`/items/${item.item_id}`} className={`loaned-items__card loaned-items__card${getCardClassName(item)}`} key={item.id}>
-                            <div className='loaned-items__details'>
+                            <div className='loaned-items__image'>
                                 {item.item_image ? (
-                                    <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} className='loaned-items__image' />
+                                    <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} />
                                 ) : (
                                     'No Image'
                                 )}
+                            </div>
+                            <div className='loaned-items__details'>
                                 <div className='loaned-items__info'>
-                                    {item.borrow_status_id === 3 && (
-                                        <p className={`loaned-items__duedate loaned-items__duedate${getCardClassName(item)}`}> -- Due in {getDaysUntilDue(item.end_date)} days --</p>
-                                    )}
-                                    {item.borrow_status_id === 2 && (
-                                        <p className={`loaned-items__pickup loaned-items__pickup${getCardClassName(item)}`}>Pick up in {getDaysUntilPickup(item.start_date)} days</p>
-                                    )}
-                                    <h3>{item.item_name}</h3>
+                                    <h3 className='loaned-items__name'>{item.item_name}</h3>
                                     <p>Lender: <strong>{item.lender_first_name} {item.lender_last_name}</strong></p>
                                     <p>Borrower: <strong>{item.borrower_first_name} {item.borrower_last_name}</strong></p>
                                     <p>Start: <strong>{new Date(item.start_date).toLocaleDateString()}</strong></p>
@@ -171,6 +177,22 @@ const LoanedItems = () => {
                                     <p>Total: <strong>{totalDays(item.start_date, item.end_date)} days</strong></p>
                                     <p>Status: <strong>{getStatusLabel(item.borrow_status_id)}</strong></p>
 
+                                    {item.borrow_status_id === 3 && (
+                                        <p className={`loaned-items__duedate loaned-items__duedate${getCardClassName(item)}`}>
+                                            {getDaysUntilDue(item.end_date) < 0
+                                                ? `Overdue by ${Math.abs(getDaysUntilDue(item.end_date))} days`
+                                                : getDaysUntilDue(item.end_date) === 0
+                                                    ? 'Due today'
+                                                    : `Due in ${getDaysUntilDue(item.end_date)} days`}
+                                        </p>
+                                    )}
+                                    {item.borrow_status_id === 2 && (
+                                        <p className={`loaned-items__pickup loaned-items__pickup${getCardClassName(item)}`}>
+                                            {getDaysUntilPickup(item.start_date) === 0
+                                                ? 'Pick up today'
+                                                : `Pick up in ${getDaysUntilPickup(item.start_date)} days`}
+                                        </p>
+                                    )}
                                     {item.borrow_status_id === 1 && (
                                         <div className='loaned-items__actions'>
                                             <button
@@ -191,13 +213,13 @@ const LoanedItems = () => {
                                     {item.borrow_status_id === 2 && (
                                         <div className='loaned-items__actions'>
                                             <button
-                                                onClick={() => handlePickUpRequest(item.id)}
+                                                onClick={(e) => { e.preventDefault(); handlePickUpRequest(item.id); }}
                                                 className='loaned-items__action-button'
                                             >
                                                 Picked Up
                                             </button>
                                             <button
-                                                onClick={() => handleCancelRequest(item.id)}
+                                                onClick={(e) => { e.preventDefault(); handleCancelRequest(item.id); }}
                                                 className='loaned-items__action-button loaned-items__action-button--cancel'
                                             >
                                                 Cancel
@@ -208,13 +230,13 @@ const LoanedItems = () => {
                                     {item.borrow_status_id === 3 && (
                                         <div className='loaned-items__actions'>
                                             <button
-                                                onClick={() => handleReturnRequest(item.id)}
+                                                onClick={(e) => { e.preventDefault(); handleReturnRequest(item.id); }}
                                                 className='loaned-items__action-button'
                                             >
                                                 Returned
                                             </button>
                                             <button
-                                                onClick={() => handleCancelRequest(item.id)}
+                                                onClick={(e) => { e.preventDefault(); handleCancelRequest(item.id); }}
                                                 className='loaned-items__action-button loaned-items__action-button--cancel'
                                             >
                                                 Cancel

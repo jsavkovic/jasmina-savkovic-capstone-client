@@ -76,19 +76,19 @@
             }
         
             &--accepted {
-                background-color: #d4edda8a;
+                // background-color: #d4edda8a;
             }
         
             &--pending {
-                background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
+                // background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
             }
         
             &--returned {
-                background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
+                // background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
             }
         
             &--declined {
-                background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
+                // background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
             }
 
             @include tablet {

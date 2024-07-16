@@ -1,119 +1,119 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
 .item-details {
+  display: flex;
+  flex-wrap: wrap;
+  height: 56rem;
+
+  &__content {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 1;
+    padding: 2rem;
+  }
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        padding: 2rem;
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    &--right {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__description {
+    margin-bottom: 1rem;
+  }
+
+  &__details {
+    margin-bottom: 1rem;
+  }
+
+  &__bottom {
+    margin-top: 1rem;
+  }
+
+  &__owner {
+    & a{
+    text-decoration: none;
+    color: $dark-blue;
+  }
+}
+
+  &__request {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    & input {
+      margin-left: 0.5rem;
     }
 
-    &__header {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+    & label {
+      margin-bottom: 0.5rem;
     }
 
-    &__icons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-
-        &--right {
-            display: flex;
-            gap: 0.5rem;
-
-            button, .icon-button {
-                width: 2rem; 
-                height: 2rem; 
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: transparent; 
-                border: none; 
-                cursor: pointer;
-                padding: 0; 
-            }
-
-            svg {
-                width: 1.5rem; 
-                height: 1.5rem; 
-            }
-        }
+    &__error,
+    &__success {
+      margin-top: 0.5rem;
+      color: red;
     }
+  }
 
-    &__main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 1rem;
-    }
+  &__button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
 
-    &__title {
-        font-size: 2rem;
-        margin: 1rem 0;
-    }
+  &__aside {
+    flex-basis: 400px;
+    margin-left: 1rem;
+    padding: 1rem 2.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+  }
 
-    &__image {
-        width: 100%;
-        max-width: 300px;
-        border-radius: 0.5rem;
-        margin-bottom: 1rem;
-    }
-
-    &__description {
-        margin-bottom: 1rem;
-    }
-
-    &__details {
-        margin-bottom: 1rem;
-    }
-
-    &__bottom {
-        margin-top: 1rem;
-    }
-
-    &__request {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-
-        & input {
-            margin-left: 0.5rem;
-        }
-
-        & label {
-            margin-bottom: 0.5rem;
-        }
-
-        &__error,
-        &__success {
-            margin-top: 0.5rem;
-            color: red;
-        }
-    }
-
-    &__button {
-        margin-top: 1rem;
-        padding: 0.5rem 1rem;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 0.25rem;
-        cursor: pointer;
-    }
-
-    &__aside {
-        flex-basis: 400px; 
-        margin-left: 1rem;
-        padding: 1rem;
-        background-color: #f8f9fa;
-        border-radius: 0.5rem;
-    }
-
-    .borrow-request {
-        text-decoration: none; 
-        color: inherit;
-    }
+  .borrow-request {
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 2px solid lightgray;
+  }
 }
