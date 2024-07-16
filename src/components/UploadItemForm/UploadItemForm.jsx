@@ -171,7 +171,7 @@ const UploadItemForm = () => {
                     {errors.image && <p className='upload-item__error'>{errors.image}</p>}
                 </div>
                 <div className='upload-item__buttons-section'>
-                    <CancelButton />
+                    <CancelButton onClick={() => navigate(-1)} />
                     <button type='submit' className='upload-item__button'>SAVE</button>
                 </div>
             </form>
