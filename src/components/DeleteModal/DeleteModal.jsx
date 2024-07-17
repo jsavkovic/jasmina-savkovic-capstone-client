@@ -1,7 +1,7 @@
 import './DeleteModal.scss';
 import CancelButton from '../CancelButton/CancelButton';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import closeIcon from '../../assets/icons/cancel.svg';
 
 const DeleteModal = ({ name, onClose, onConfirmDelete, isActive, navigateTo }) => {
@@ -37,7 +37,7 @@ const DeleteModal = ({ name, onClose, onConfirmDelete, isActive, navigateTo }) =
                     </p>
                 </div>
                 <div className='delete__buttons'>
-                    <CancelButton onClose={onClose} to={navigateTo} />
+                    <CancelButton onClick={onClose} navigateTo={navigateTo} />
                     <button onClick={onConfirmDelete} className='delete__button'>DELETE</button>
                 </div>
             </div>
