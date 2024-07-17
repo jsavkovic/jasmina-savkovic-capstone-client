@@ -8,6 +8,7 @@ import EditButton from '../EditButton/EditButton';
 import DeleteButton from '../DeleteButton/DeleteButton';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import ListSwitch from '../ListSwitch/ListSwitch';
+import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
 const ItemDetails = ({ item, refreshItems }) => {
     const { userId } = useUser();
@@ -15,8 +16,7 @@ const ItemDetails = ({ item, refreshItems }) => {
     const [borrowRequests, setBorrowRequests] = useState([]);
     const [isUpdating, setIsUpdating] = useState(false);
     const [isModalActive, setIsModalActive] = useState(false);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [dateRange, setDateRange] = useState([null, null]);
     const [dateError, setDateError] = useState('');
     const [requestError, setRequestError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -44,13 +44,13 @@ const ItemDetails = ({ item, refreshItems }) => {
             console.log('Item deleted');
             setIsModalActive(false);
             refreshItems();
-            navigate(`/users/${userId}/items`);
+            navigate(`/items`);
         } catch (error) {
             console.error('Error deleting item:', error);
         }
     };
 
-    const toggleStatus = async (isChecked) => {
+    const toggleStatus = async isChecked => {
         const newStatusId = isChecked ? 1 : 2;
         const newStatus = isChecked ? 'Listed' : 'Inactive';
 
@@ -66,6 +66,7 @@ const ItemDetails = ({ item, refreshItems }) => {
     };
 
     const validateDates = () => {
+        const [startDate, endDate] = dateRange;
         if (!startDate || !endDate) {
             setDateError('Both start date and end date are required.');
             return false;
@@ -97,6 +98,8 @@ const ItemDetails = ({ item, refreshItems }) => {
             return;
         }
 
+        const [startDate, endDate] = dateRange;
+
         try {
             const borrowRequest = {
                 borrower_id: userId,
@@ -104,7 +107,7 @@ const ItemDetails = ({ item, refreshItems }) => {
                 item_id: item.id,
                 start_date: startDate,
                 end_date: endDate,
-                borrow_status_id: 1,
+                borrow_status_id: 1
             };
 
             console.log('Creating borrow request with data:', borrowRequest);
@@ -116,6 +119,7 @@ const ItemDetails = ({ item, refreshItems }) => {
             fetchBorrowRequests();
         } catch (err) {
             console.error('Error creating borrow request:', err);
+            console.error(err.response?.data);
             if (err.response && err.response.data && err.response.data.error) {
                 setRequestError(err.response.data.error);
             } else {
@@ -124,111 +128,122 @@ const ItemDetails = ({ item, refreshItems }) => {
         }
     };
 
-    const formatDate = (date) => {
+    const formatDate = date => {
         return new Date(date).toLocaleDateString();
     };
 
-
-
     return (
         <section className='item-details'>
-            <div className='item-details__header'>
-                <div className='item-details__icons'>
-                    <BackButton to={-1} />
-                    <div className='item-details__icons--right'>
-                        {userId === item.user_id && (
-                            <>
-                                <EditButton to={`/items/${item.id}/edit`} />
-                                <DeleteButton onClick={() => setIsModalActive(true)} />
-                                <DeleteModal
-                                    name={item.name}
-                                    isActive={isModalActive}
-                                    onClose={() => setIsModalActive(false)}
-                                    onConfirmDelete={handleDelete}
-                                />
-                            </>
-                        )}
-                    </div>
-                </div>
-            </div>
-            <h1 className='item-details__title'>{item.name}</h1>
             <div className='item-details__content'>
+                <div className='item-details__header'>
+                    <div className='item-details__icons'>
+                        <BackButton to={-1} />
+                        <div className='item-details__icons--right'>
+                            {userId === item.user_id && (
+                                <>
+                                    {userId === item.user_id && (
+                                        <ListSwitch
+                                            isChecked={itemStatus === 'Listed'}
+                                            onSwitchChange={toggleStatus}
+                                        />
+                                    )}
+                                    <EditButton to={`/items/${item.id}/edit`} />
+                                    <DeleteButton onClick={() => setIsModalActive(true)} />
+                                    <DeleteModal
+                                        name={item.name}
+                                        isActive={isModalActive}
+                                        onClose={() => setIsModalActive(false)}
+                                        onConfirmDelete={handleDelete}
+                                    />
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    <h1 className='item-details__title'>{item.name}</h1>
+                </div>
                 <div className='item-details__main'>
-                    <img src={`${API_URL}/uploads/${item.image}`} alt={item.name} className="item-details__image" />
+                    <img
+                        src={`${API_URL}/uploads/${item.image}`}
+                        alt={item.name}
+                        className='item-details__image'
+                    />
                     <p className='item-details__description'>{item.description}</p>
                     <div className='item-details__details'>
                         <p className='item-details__category'>Category: {item.category}</p>
                         <p className='item-details__owner'>
-                            Owner: <Link to={`/users/${item.user_id}/items`}>{item.owner}</Link>
+                            Owner:{' '}
+                            <Link to={`/${item.user_id}/items`}>{item.owner}</Link>
                         </p>
                     </div>
                     <div className='item-details__bottom'>
                         {userId !== item.user_id && (
                             <div className='item-details__request'>
-                                <label>
-                                    Start Date:
-                                    <input
-                                        type='date'
-                                        value={startDate}
-                                        onChange={(e) => {
-                                            setStartDate(e.target.value);
-                                            setSuccessMessage('');
-                                        }}
-                                    />
-                                </label>
-                                <label>
-                                    End Date:
-                                    <input
-                                        type='date'
-                                        value={endDate}
-                                        onChange={(e) => {
-                                            setEndDate(e.target.value);
-                                            setSuccessMessage('');
-                                        }}
-                                    />
-                                </label>
-                                {dateError && <p className='item-details__error'>{dateError}</p>}
-                                {requestError && <p className='item-details__error'>{requestError}</p>}
-                                {successMessage && <p className='item-details__success'>{successMessage}</p>}
-                                <button onClick={handleRequest} className='item-details__button'>
+                                <DateRangePicker
+                                    value={dateRange}
+                                    onChange={(newValue) => {
+                                        setDateRange(newValue);
+                                        setSuccessMessage('');
+                                    }}
+                                />
+                                {dateError && (
+                                    <p className='item-details__error'>{dateError}</p>
+                                )}
+                                {requestError && (
+                                    <p className='item-details__error'>{requestError}</p>
+                                )}
+                                {successMessage && (
+                                    <p className='item-details__success'>{successMessage}</p>
+                                )}
+                                <button
+                                    onClick={handleRequest}
+                                    className='item-details__button'
+                                >
                                     Submit Request
                                 </button>
                             </div>
                         )}
-                        {userId === item.user_id && (
-                            <ListSwitch isChecked={itemStatus === 'Listed'} onSwitchChange={toggleStatus} />
-                        )}
                     </div>
                 </div>
-                <aside className='item-details__aside'>
-                    <h3>Borrow Requests</h3>
-                    {borrowRequests.length > 0 ? (
-                        borrowRequests
-                            .filter(request => request.borrower_id === userId || request.lender_id === userId)
-                            .map((request) => (
-                                <Link
-                                    to={userId === item.user_id ? `/users/${userId}/loaned` : `/users/${userId}/borrowed`}
-                                    key={request.id}
-                                    className='borrow-request'>
-                                    <p>
-                                        <strong>Status:</strong> {request.borrow_status}
-                                    </p>
-                                    <p>
-                                        <strong>Borrower:</strong> {request.borrower_id === userId ? 'You' : `${request.borrower_first_name} ${request.borrower_last_name}`}
-                                    </p>
-                                    <p>
-                                        <strong>Start Date:</strong> {formatDate(request.start_date)}
-                                    </p>
-                                    <p>
-                                        <strong>End Date:</strong> {formatDate(request.end_date)}
-                                    </p>
-                                </Link>
-                            ))
-                    ) : (
-                        <p>No borrow requests found.</p>
-                    )}
-                </aside>
             </div>
+            <aside className='item-details__aside'>
+                <h3>Borrow Requests</h3>
+                {borrowRequests.length > 0 ? (
+                    borrowRequests
+                        .filter(
+                            request =>
+                                request.borrower_id === userId || request.lender_id === userId
+                        )
+                        .map(request => (
+                            <Link
+                                to={
+                                    userId === item.user_id
+                                        ? `/users/${userId}/loaned`
+                                        : `/users/${userId}/borrowed`
+                                }
+                                key={request.id}
+                                className='borrow-request'
+                            >
+                                <p>
+                                    <strong>Status:</strong> {request.borrow_status}
+                                </p>
+                                <p>
+                                    <strong>Borrower:</strong>{' '}
+                                    {request.borrower_id === userId
+                                        ? 'You'
+                                        : `${request.borrower_first_name} ${request.borrower_last_name}`}
+                                </p>
+                                <p>
+                                    <strong>Start Date:</strong> {formatDate(request.start_date)}
+                                </p>
+                                <p>
+                                    <strong>End Date:</strong> {formatDate(request.end_date)}
+                                </p>
+                            </Link>
+                        ))
+                ) : (
+                    <p>No borrow requests found.</p>
+                )}
+            </aside>
         </section>
     );
 };

@@ -1,15 +1,13 @@
 import './CancelButton.scss';
 import { useNavigate } from 'react-router-dom';
 
-const CancelButton = ({ onClose, to }) => {
+const CancelButton = ({ onClick, navigateTo }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        if (onClose) onClose();
-        if (to) {
-            navigate(to);
-        } else {
-            navigate(-1);
+        if (onClick) onClick();
+        if (navigateTo !== undefined) {
+            navigate(navigateTo);
         }
     };
 

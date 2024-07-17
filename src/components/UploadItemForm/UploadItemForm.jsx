@@ -87,7 +87,7 @@ const UploadItemForm = () => {
             const url = `${API_URL}/items`;
             try {
                 await submitData(formValues, url);
-                navigate(`/users/${userId}/items`);
+                navigate(`/items`);
                 window.scrollTo(0, 0);
             } catch (err) {
                 console.error('Error uploading item:', err);
@@ -171,7 +171,7 @@ const UploadItemForm = () => {
                     {errors.image && <p className='upload-item__error'>{errors.image}</p>}
                 </div>
                 <div className='upload-item__buttons-section'>
-                    <CancelButton />
+                    <CancelButton onClick={() => navigate(-1)} />
                     <button type='submit' className='upload-item__button'>SAVE</button>
                 </div>
             </form>

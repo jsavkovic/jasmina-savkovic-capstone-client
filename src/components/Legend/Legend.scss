@@ -1,66 +1,109 @@
-@use "../../styles/partials/variables" as *;
-@use "../../styles/partials/mixins" as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
 
 .legend {
     padding: 1rem;
-    background-color: #f9f9f9;
+    border: 1px solid #ccc;
     border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    // margin-bottom: 2rem;
+    margin-bottom: 1rem;
+  
 
-    &__title {
-        font-size: .9rem;
-        margin-bottom: 0.5rem;
-        text-align: center;
-    }
-
-    &__list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+    @include tablet {
+        flex-direction: row;
         display: flex;
         flex-direction: column;
-
-        @include small {
-            flex-direction: row;
-        }
-        
+        justify-content: flex-end;
+        align-items: center;
     }
 
+    @include tablet {
+        width: 100%;
+    }
+
+    &__title {
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+
+        @include tablet {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
     &__item {
+        // width: 100%;
         display: flex;
         align-items: center;
-        margin: 0.25rem 0.5rem;
+        justify-content: space-around;
+        margin-bottom: 0.5rem;
+        position: relative;
 
-        &:last-child {
-            margin-bottom: 0;
+        @include tablet {
+            padding: 0 0.5rem
         }
 
-        &--pickup .legend__color {
-            background-color: $light-green;
-        }
+        .legend__color {
+            position: absolute; 
+            left: -10px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            width: 1rem;
+            height: 1rem;
+            margin-left: 0.5rem; 
+            z-index: 1; 
+            border-radius: 0.25rem; 
+            pointer-events: none;
+        
+            &--soon {
+                background-color: #ffeeba8b;
+            }
+        
+            &--today {
+                background-color: #f8d7da87;
+            }
+        
+            &--overdue {
+                background-color: #f5c6cb87;
+            }
+        
+            &--accepted {
+                // background-color: #d4edda8a;
+            }
+        
+            &--pending {
+                // background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
+            }
+        
+            &--returned {
+                // background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
+            }
+        
+            &--declined {
+                // background: linear-gradient(135deg, #a0c4ff85, #ffc8dd88);
+            }
 
-        &--soon .legend__color {
-            background-color: #ffff00;
-        }
-
-        &--today .legend__color {
-            background-color: #f4a208;
-        }
-
-        &--overdue .legend__color {
-            background-color: #ec2020;
+            @include tablet {
+                left: 6px; 
+            }
         }
     }
 
-    &__color {
-        width: 15px;
-        height: 15px;
-        border-radius: 0.25rem;
-        margin-right: 0.5rem;
+    &__checkbox {
+        margin-right: 2rem; 
     }
 
-    &__text {
-        font-size: .8rem;
+    &__input {
+        @include tablet {
+            margin: 0.5rem;
+        }
     }
 }

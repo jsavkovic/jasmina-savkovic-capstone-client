@@ -1,16 +1,13 @@
-@use "../../styles/partials/variables" as *;
-@use "../../styles/partials/mixins" as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
 
 .edit-button {
-    background: none;
-    border: none;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-
-   &__icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 8px; 
-    }
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
 }
