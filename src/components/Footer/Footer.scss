@@ -10,4 +10,8 @@
   background-color: $alternate-light-grey;
   padding: 2.5rem;
   text-align: center;
+
+  &__logo {
+    height: 7rem;
+  }
 }

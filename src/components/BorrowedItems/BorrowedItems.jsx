@@ -153,19 +153,10 @@ const BorrowedItems = () => {
             <div className='borrowed-items__grid'>
                 {sortedBorrowedItems.length > 0 ? (
                     sortedBorrowedItems.map(item => (
-                        <Link
-                            to={`/items/${item.item_id}`}
-                            className={`borrowed-items__card borrowed-items__card${getCardClassName(
-                                item
-                            )}`}
-                            key={item.id}
-                        >
+                        <Link to={`/items/${item.item_id}`} className={`borrowed-items__card borrowed-items__card${getCardClassName(item)}`} key={item.id}>
                             <div className='borrowed-items__image'>
                                 {item.item_image ? (
-                                    <img
-                                        src={`${API_URL}/uploads/${item.item_image}`}
-                                        alt={item.item_name}
-                                    />
+                                    <img src={`${API_URL}/uploads/${item.item_image}`} alt={item.item_name} />
                                 ) : (
                                     'No Image'
                                 )}
@@ -225,13 +216,13 @@ const BorrowedItems = () => {
                                                 : `Pick up in ${getDaysUntilPickup(item.start_date)} days`}
                                         </p>
                                     )}
-                                    {item.borrow_status_id === 1 && (
-                                        <CancelButton
-                                            onClick={() => cancelRequest(item.id)}
-                                        />
-                                    )}
                                 </div>
                             </div>
+                            {item.borrow_status_id === 1 && (
+                                <CancelButton
+                                    onClick={() => cancelRequest(item.id)}
+                                />
+                            )}
                         </Link>
                     ))
                 ) : (

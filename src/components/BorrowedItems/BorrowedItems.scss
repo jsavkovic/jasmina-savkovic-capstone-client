@@ -73,6 +73,15 @@
       border: 5px solid #f5c6cb;
       background-color: $alternate-light-grey;
     }
+
+    &__link {
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 
   &__image {
@@ -113,7 +122,16 @@
     gap: 0.5rem;
     font-size: 0.8rem;
   }
-  
+
+  &__link {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   &__duedate {
     text-align: center;
     font-weight: bold;
