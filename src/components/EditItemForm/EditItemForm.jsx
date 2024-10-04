@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import BackButton from '../BackButton/BackButton';
+import React, { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import BackButton from '../BackButton/BackButton'
 import CancelButton from '../CancelButton/CancelButton'
-import './EditItemForm.scss';
+import './EditItemForm.scss'
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL
 
 const categoryOptions = [
     { id: 1, type: 'Nursery' },
@@ -20,11 +20,11 @@ const categoryOptions = [
     { id: 10, type: 'Bedding' },
     { id: 11, type: 'Outdoor Gear' },
     { id: 12, type: 'Learning & Educational' }
-];
+]
 
 const EditItemForm = () => {
-    const { itemId } = useParams();
-    const navigate = useNavigate();
+    const { itemId } = useParams()
+    const navigate = useNavigate()
     const [formValues, setFormValues] = useState({
         name: '',
         description: '',
@@ -32,16 +32,16 @@ const EditItemForm = () => {
         status_id: '',
         image: null,
         existingImage: ''
-    });
-    const [errors, setErrors] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
-    const [imagePreview, setImagePreview] = useState('');
+    })
+    const [errors, setErrors] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
+    const [imagePreview, setImagePreview] = useState('')
 
     useEffect(() => {
         const fetchItemData = async () => {
             try {
-                const response = await axios.get(`${API_URL}/items/${itemId}`);
-                const item = response.data;
+                const response = await axios.get(`${API_URL}/items/${itemId}`)
+                const item = response.data
                 setFormValues({
                     name: item.name,
                     description: item.description,
@@ -49,43 +49,43 @@ const EditItemForm = () => {
                     status_id: item.status_id,
                     image: null,
                     existingImage: item.image
-                });
-                setIsLoading(false);
+                })
+                setIsLoading(false)
             } catch (error) {
-                console.error('Error fetching item data:', error);
-                setIsLoading(false);
+                console.error('Error fetching item data:', error)
+                setIsLoading(false)
             }
-        };
+        }
 
-        fetchItemData();
-    }, [itemId]);
+        fetchItemData()
+    }, [itemId])
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
-        setErrors({ ...errors, [name]: '' });
-    };
+    const handleInputChange = e => {
+        const { name, value } = e.target
+        setFormValues({ ...formValues, [name]: value })
+        setErrors({ ...errors, [name]: '' })
+    }
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setFormValues({ ...formValues, image: file });
+    const handleFileChange = e => {
+        const file = e.target.files[0]
+        setFormValues({ ...formValues, image: file })
 
-        const imageUrl = URL.createObjectURL(file);
-        setImagePreview(imageUrl);
-    };
-
+        const imageUrl = URL.createObjectURL(file)
+        setImagePreview(imageUrl)
+    }
 
     const validateForm = () => {
-        const newErrors = {};
-        if (!formValues.name) newErrors.name = 'Name is required';
-        if (!formValues.description) newErrors.description = 'Description is required';
-        if (!formValues.type_id) newErrors.type_id = 'Category is required';
-        if (!formValues.status_id) newErrors.status_id = 'Status is required';
-        return newErrors;
-    };
+        const newErrors = {}
+        if (!formValues.name) newErrors.name = 'Name is required'
+        if (!formValues.description)
+            newErrors.description = 'Description is required'
+        if (!formValues.type_id) newErrors.type_id = 'Category is required'
+        if (!formValues.status_id) newErrors.status_id = 'Status is required'
+        return newErrors
+    }
 
     const submitData = async (data, url) => {
-        const formData = new FormData();
+        const formData = new FormData()
         for (const key in data) {
             formData.append(key, data[key])
         }
@@ -95,31 +95,31 @@ const EditItemForm = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            });
+            })
         } catch (error) {
-            console.error('Error submitting data:', error);
-            throw error;
+            console.error('Error submitting data:', error)
+            throw error
         }
-    };
+    }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const newErrors = validateForm();
+    const handleSubmit = async e => {
+        e.preventDefault()
+        const newErrors = validateForm()
         if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
+            setErrors(newErrors)
         } else {
-            const url = `${API_URL}/items/${itemId}`;
+            const url = `${API_URL}/items/${itemId}`
             try {
-                await submitData(formValues, url);
-                navigate(`/items/${itemId}`);
-                window.scrollTo(0, 0);
+                await submitData(formValues, url)
+                navigate(`/items/${itemId}`)
+                window.scrollTo(0, 0)
             } catch (err) {
-                console.error('Error updating item:', err);
+                console.error('Error updating item:', err)
             }
         }
-    };
+    }
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <p>Loading...</p>
 
     return (
         <section className='edit-item'>
@@ -147,7 +147,9 @@ const EditItemForm = () => {
                         value={formValues.description}
                         onChange={handleInputChange}
                     />
-                    {errors.description && <p className='error-text'>{errors.description}</p>}
+                    {errors.description && (
+                        <p className='error-text'>{errors.description}</p>
+                    )}
                 </div>
                 <div className='edit-item__field'>
                     <label htmlFor='type_id'>Category</label>
@@ -158,7 +160,7 @@ const EditItemForm = () => {
                         onChange={handleInputChange}
                     >
                         <option value=''>Select Category</option>
-                        {categoryOptions.map((option) => (
+                        {categoryOptions.map(option => (
                             <option key={option.id} value={option.id}>
                                 {option.type}
                             </option>
@@ -184,11 +186,20 @@ const EditItemForm = () => {
                     <label htmlFor='existingImage'>Image</label>
 
                     {imagePreview ? (
-                        <img src={imagePreview} alt='New image' className='edit-item__existing-image' />
+                        <img
+                            src={imagePreview}
+                            alt='New image'
+                            className='edit-item__existing-image'
+                        />
                     ) : (
                         formValues.existingImage && (
-                            <img src={`${API_URL}/uploads/${formValues.existingImage}`} alt='Current image' className='edit-item__existing-image' />
-                        ))}
+                            <img
+                                src={`${API_URL}/uploads/${formValues.existingImage}`}
+                                alt='Current image'
+                                className='edit-item__existing-image'
+                            />
+                        )
+                    )}
                 </div>
                 <div className='edit-item__field'>
                     <label htmlFor='image'>Replace Image</label>
@@ -203,11 +214,13 @@ const EditItemForm = () => {
                 </div>
                 <div className='edit-item__buttons-section'>
                     <CancelButton />
-                    <button type='submit' className='edit-item__button'>SAVE</button>
+                    <button type='submit' className='edit-item__button'>
+                        SAVE
+                    </button>
                 </div>
             </form>
         </section>
-    );
-};
+    )
+}
 
-export default EditItemForm;
+export default EditItemForm
