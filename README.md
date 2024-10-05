@@ -1,136 +1,193 @@
-# Project Title
-Lendaroo
+# Lendaroo
 
-## Overview
+Lendaroo is a borrow/lend platform for parents to share essential, high-value baby gear, helping reduce consumption and expenses during the early stages of parenthood.
 
-It's a borrow/lend platform for parents to share large-ticket items for young children, helping reduce consumption and expenses during the early stages of parenthood.
+![Lendaroo page](./public/images/borrowed_items_page.png)
 
+### 🤔 Why Lendaroo?
 
-### Problem
+The early stages of parenthood come with significant expenses for items that are often needed for only a short time. While many of these items are gently used and ideal for sharing, finding a reliable and convenient way to do so can be difficult. Lendaroo solves this by creating a platform for parents to lend and borrow essential baby gear within a trusted community. By facilitating the sharing of these items, Lendaroo helps families save money, reduce consumption, and minimize waste, easing financial pressure and promoting sustainable, eco-friendly living.
 
-Early stages of parenthood come with significant expenses for items that are often used for only a short period. Items such as bassinets, specialty strollers, snowsuits, swings, and jolly jumpers are typically gently used and can be shared among parents. However, finding a reliable and convenient way to share these high-ticket items can be challenging. My app addresses this pain point by providing a platform for parents to lend and borrow these items within a close knit community. By facilitating the sharing of these essential items, we help parents save money, reduce consumption, and minimize unnecessary waste. This not only eases the financial burden on families but also promotes sustainable living and contributes to a greener planet.
+### 👪 Who Should Use Lendaroo?
 
-### User Profile
+Lendaroo is for parents and caregivers of young children who want to borrow or lend high-value baby and toddler items within a trusted community of friends and family.
 
-Parents and caregivers with young children who are looking to borrow or lend high-ticket baby and toddler items.
-Users will create an account and join or create a community of trusted friends and family. They can then list items they are willing to lend and browse items available for borrowing. 
+### 🌟 Features
 
+- As a user, I want to list items I am willing to lend so that others can see what is available.
+- As a user, I want to upload photos and descriptions of items I am lending so that others can understand the condition and features of the items.
+- As a user, I want to browse available items so that I can find what I need.
+- As a user, I want to request to borrow an item so that I can use it for a period of time.
+- As a user, I want to receive and manage borrowing requests so that I can decide who can borrow my items.
+- As a user, I want to track who has borrowed my items and when they are due back so that I can ensure they are returned.
 
-### Features
+### 🎬 Demo
 
-- As a user, I want to create an account to securely access the app.
-- As a user, I want to log in to my account so that I can access my profile and activities.
-- As a logged in user, I want to list items I am willing to lend so that others can see what is available.
-- As a logged in user, I want to upload photos and descriptions of items I am lending so that others can understand the condition and features of the items.
-- As a logged in user, I want to browse available items so that I can find what I need.
-- As a logged in user, I want to request to borrow an item so that I can use it for a period of time.
-- As a logged in user, I want to receive and manage borrowing requests so that I can decide who can borrow my items.
-- As a logged in user,  I want to track who has borrowed my items and when they are due back so that I can ensure they are returned.
+![Demo 1](./public/demo/Lendaroo_demo-1.gif)
 
+![Demo 2](./public/demo/Lendaroo_demo-2.gif)
 
 ## Implementation
 
-### Tech Stack
+### 🖥️ Tech Stack
 
-- React
+- React.js (with React Router)
+- SASS
+- Material UI
+- Node.js
+- Express.js
+- Axios
+- Knex.js
 - MySQL
-- Express
-- Client libraries: 
-    - react
-    - react-router
-    - axios
-- Server libraries:
-    - knex
-    - express
 
-### APIs
+### 🗺️ Sitemap
 
-- No external APIs will be used for the first sprint
+- Lend Items
+- Friends List
+- Item Details
+  - Upload Item
+  - Edit Item
+  - Delete Item
+- Request Item
 
-### Sitemap
+## 📡 API Endpoints
 
-- Register
-- Login
-- Profile
-- List of Lend items
-- List of friends
-- Item details 
-    - Upload item
-    - Edit item
-    - Delete item
-- Request item
+### Borrow Requests
 
-### Mockups
+- `GET    /` – Get all borrow requests
+- `GET    /borrower/:userId` – Get borrow requests by borrower
+- `GET    /lender/:userId` – Get borrow requests by lender
+- `GET    /item/:itemId` – Get borrow requests for a specific item
+- `GET    /:requestId` – Get a specific borrow request by ID
+- `GET    /status/:statusId` – Get borrow requests by status
+- `POST   /` – Create a new borrow request
+- `PUT    /:requestId` – Update a borrow request
+- `DELETE /:requestId` – Delete a borrow request
 
-See mockup folder in the repo.
+### Items
 
-### Data
+- `POST   /` – Create a new item (with image upload)
+- `GET    /` – Get all items
+- `GET    /item-types` – Get all item types
+- `GET    /user/:userId` – Get items by user and status
+- `GET    /:itemId` – Get an item by ID
+- `PUT    /:itemId` – Update an item by ID (with image upload)
+- `PUT    /:itemId/status` – Update the status of an item
+- `DELETE /:itemId` – Delete an item
 
-See databse_diagram in the repo
+### Friends
 
-### Endpoints
+- `GET    /:requestId` – Get a user relationship by ID
+- `GET    /:userId/all` – Get all friends for a user
+- `GET    /pending/:userId` – Get all pending friend requests for a user
+- `POST   /` – Create a friend request
+- `PUT    /:requestId` – Update the status of a friend request
+- `DELETE /:requestId` – Delete a friend request (consider adding a "cancelled" state)
 
-POST   /register         - create a new user
-POST   /login            - log in user
+### User Management
 
-GET    /items/:itemId    - retrieves a specific item
-POST   /items            - creates new item
-PUT    /items/:itemId    - updates an existing item
-DELETE /items/:itemId    - deletes an item
+- `POST   /register` – Register a new user
+- `POST   /login` – Log in a user
+- `GET    /profile` – Get the logged-in user's profile (authentication required)
+- `GET    /:userId` – Get a user by ID
+- `GET    /:userId/items` – Get all items by a user
 
-POST   /borrow-request   - creates a new borrow request
-GET    /borrow-request   - retrieves all borrow requests for logged in user
-PUT    /borrow-request/:requestId - update status of borrow request
-- should i add the ability to cancel a borrow request, what does that mean? is it deleted or is there another state or cancelled? latter?
+## 🚀 Future Development and Implementation Plan
 
-GET    /friends          - retrieves a list of all friends for logged in user
-POST   /friends          - sends a friend request to another user
-- same goes for friend request, cancelled as an option
+- Create **Register** page
+- Create **Login** page
+- Create a **Profile/Dashboard** page
+- Implement **user authentication and authorization**
+- Enable **user search**, friend request sending, and accepting
+- Facilitate **communication between lenders and borrowers**
+- Manage **lending periods** and send reminders for returns
+- Add an **item category for gifting** and related functionality
 
-GET    /:userId/items/    - retrieve a list of all items by user
+## 💻 Local Installation
 
+### Prerequisites
 
+Before you begin, ensure you have the following installed on your machine:
 
-### Auth
+- Node.js (v14 or later) and npm
+- MySQL installed and running locally
+- Git
 
-Does your project include any login or user profile functionality? If so, describe how authentication/authorization will be implemented.
+### 🔗 Repository Links
 
-Auth will not be prioritized in this sprint and are listed as a nice to have below.  
+- **Client:** [https://github.com/jsavkovic/jasmina-savkovic-capstone-client](https://github.com/jsavkovic/jasmina-savkovic-capstone-client)
+- **Server:** [https://github.com/jsavkovic/jasmina-savkovic-capstone-server](https://github.com/jsavkovic/jasmina-savkovic-capstone-server)
 
-## Roadmap
+### Server Setup (Backend)
 
-Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation. Think about what you can reasonably complete before the due date. The more detail you provide, the easier it will be to build.
+1. **Clone or download** the [Server Repository](https://github.com/jsavkovic/jasmina-savkovic-capstone-server).
 
-Day 1: Project Setup
-- Set up the project structure with React and Express.
-- Configure database and server environment.
+2. **Install dependencies:**
 
-Day 2-3: Item Management
-- Implement the "List Items" feature.
-- Create "Upload Item", "Edit Item", and "Delete Item" pages.
+   ```
+   npm install
+   ```
 
-Day 4-5: Browsing and Searching Items
-- Implement browsing of available items.
-- Implement searching for specific items.
+3. **Set up the MySQL database:**
 
-Day 6-7: Borrowing and Request Management
-- Implement borrowing requests.
-- Manage borrowing requests and track items.
+   - Create a new database.
+   - Create a new MySQL user and grant privileges.
 
-Day 8: Additional Pages and Features
-- Implement Home Page/Profile, List of Items, Item Details, and List of Friends pages.
+4. **Configure `.env` file:**
 
-Day 9-10: Testing, Bug Fixes and Presentation Preparation
+   ```
+   PORT=<PORT>
+   DB_HOST=127.0.0.1
+   DB_LOCAL_DBNAME=<YOUR_DB_NAME>
+   DB_LOCAL_USER=<YOUR_DB_USER>
+   DB_LOCAL_PASSWORD=<YOUR_DB_PASSWORD>
+   ```
 
-## Nice-to-haves
+5. **Run migrations:**
 
-Your project will be marked based on what you committed to in the above document. Under nice-to-haves, you can list any additional features you may complete if you have extra time, or after finishing.
+   ```
+   npx knex migrate:latest
+   ```
 
-- user authentication and authorization
-- user search - request and accept friend requests
-- facilitate communication between lenders and borrowers 
-- manage lending periods, and provide reminders for returns
-- item category for gifting and related functionality
+6. **Run seed files:**
 
+   ```
+   node db/run_seeds.js
+   ```
 
+7. **Start the server:**
+
+   ```
+   npm start
+   ```
+
+### Client Setup
+
+1. **Clone or download** the [Client Repository](https://github.com/jsavkovic/jasmina-savkovic-capstone-client).
+
+2. **Install dependencies:**
+
+   ```
+   npm install
+   ```
+
+3. **Configure `.env` file:**
+
+   ```
+   VITE_API_URL=http://localhost:<PORT>
+   ```
+
+4. **Start the client:**
+
+   ```
+   npm run dev
+   ```
+
+### 🤝 Contributing
+
+If you'd like to contribute to the Lendaroo project, please fork the repository and submit a pull request with your changes.
+
+### 🚧 Work in Progress
+
+This app is currently under active development. Features are being continuously added and refined, so expect updates and new functionality regularly.
 
